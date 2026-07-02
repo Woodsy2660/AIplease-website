@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ *
+ * AI Please — "Refined Stone" design system
+ * Warm off-white canvas, near-black ink, restrained burnt-sienna accent.
+ * ------------------------------------------------------------------ */
+
+:root {
+  --canvas: #faf9f7; /* warm off-white — page background */
+  --sand: #f2eee7; /* alternating section panel */
+  --sand-deep: #eae3d8; /* deeper stone for cards / emphasis blocks */
+  --ink: #1c1a17; /* near-black warm — headings & primary text */
+  --ink-soft: #4a453e; /* secondary text */
+  --muted: #6f675b; /* captions, labels, eyebrows */
+  --border: #e4ded4; /* hairline rules & dividers */
+  --accent: #c2410c; /* burnt sienna — CTAs, markers, emphasis */
+  --accent-strong: #9a3412; /* accent hover / pressed */
+  --on-accent: #fff8f3; /* text on accent surfaces */
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-sand: var(--sand);
+  --color-sand-deep: var(--sand-deep);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-on-accent: var(--on-accent);
+
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  /* Tailwind v4 defaults borders to currentColor; pin to our stone hairline. */
+  *,
+  *::before,
+  *::after {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem; /* clears the sticky navbar on anchor jumps */
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--canvas);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.04;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* A thin top-to-bottom "scan line" texture used sparingly on hero/CTA bands. */
+@utility grain-rules {
+  background-image: repeating-linear-gradient(
+    to right,
+    color-mix(in oklab, var(--ink) 4%, transparent) 0 1px,
+    transparent 1px 96px
+  );
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes floaty {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -16px, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
