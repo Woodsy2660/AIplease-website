@@ -58,6 +58,10 @@ export const metadata: Metadata = {
     title: "AI Please — Strategy. Delivery. Partnership.",
     description: "AI that earns its place — and keeps it.",
   },
+  icons: {
+    icon: [{ url: "/brand/aiplease-mark-stone-t.png", type: "image/png" }],
+    apple: "/brand/aiplease-mark-stone-t.png",
+  },
 };
 
 export default function RootLayout({
