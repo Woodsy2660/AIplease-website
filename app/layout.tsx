@@ -59,8 +59,8 @@ export const metadata: Metadata = {
     description: "AI that earns its place — and keeps it.",
   },
   icons: {
-    icon: [{ url: "/brand/aiplease-mark-stone-t.png", type: "image/png" }],
-    apple: "/brand/aiplease-mark-stone-t.png",
+    icon: [{ url: "/brand/favicon-mark.png", type: "image/png" }],
+    apple: "/brand/favicon-mark.png",
   },
 };
 
