@@ -107,6 +107,6 @@ export const NAV: NavItem[] = [
 
 /** Primary call-to-action displayed in the header. */
 export const CTA = {
-  label: "Get a free audit",
-  href: "/audit",
+  label: "Contact",
+  href: "/contact",
 } as const;

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
 import { Container } from "@/components/ui/container";
-import { Section } from "@/components/ui/section";
 import { Eyebrow } from "@/components/ui/eyebrow";
 import { Reveal } from "@/components/ui/reveal";
 import { ContactForm } from "@/components/site/contact-form";
@@ -10,7 +9,7 @@ import { contact } from "@/lib/content";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Tell us what you're trying to achieve. We'll come back with a clear view of whether — and how — AI helps.",
+    "Tell us what you're trying to achieve. We'll come back with a clear view of whether and how AI helps.",
 };
 
 export default async function Page({
@@ -21,10 +20,9 @@ export default async function Page({
   const { product } = await searchParams;
 
   return (
-    <Section tone="canvas">
+    <section className="bg-white py-14 sm:py-16 lg:py-20 xl:py-24">
       <Container>
         <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
-          {/* Left: invitation + commitments */}
           <div>
             <Reveal>
               <Eyebrow>Contact</Eyebrow>
@@ -66,12 +64,11 @@ export default async function Page({
             </Reveal>
           </div>
 
-          {/* Right: form */}
           <Reveal delay={0.1}>
             <ContactForm defaultProduct={product} />
           </Reveal>
         </div>
       </Container>
-    </Section>
+    </section>
   );
 }

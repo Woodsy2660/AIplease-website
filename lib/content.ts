@@ -387,27 +387,13 @@ export const about = {
 export const contact = {
   heading: "Let's Talk",
   intro:
-    "Tell us what you're trying to achieve. We'll come back with a clear view of whether — and how — AI helps.",
+    "Tell us what you're trying to achieve. We'll come back with a clear view of whether and how AI helps.",
   commitments: [
     "No commitment required for the initial call",
     "All enquiries treated in confidence",
     "Scoping and proposal provided before any engagement begins",
   ],
   responsePromise: "Within two business days",
-  timelines: [
-    "Exploring options",
-    "Within 1 month",
-    "1–3 months",
-    "3–6 months",
-    "Not sure yet",
-  ],
-  budgets: [
-    "Not sure yet",
-    "Under $25k",
-    "$25k–$50k",
-    "$50k–$100k",
-    "$100k+",
-  ],
 } as const;
 
 // ---------------------------------------------------------------------------

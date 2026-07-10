@@ -3,7 +3,6 @@
 import * as React from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { contact } from "@/lib/content";
 
 type Status = "idle" | "submitting" | "success";
 
@@ -16,11 +15,9 @@ type FieldErrors = {
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const inputClass =
-  "h-11 w-full rounded-lg border border-border bg-canvas px-4 text-ink placeholder:text-muted";
+  "h-11 w-full rounded-lg border border-border bg-white px-4 text-ink placeholder:text-muted";
 const textareaClass =
-  "min-h-36 w-full rounded-lg border border-border bg-canvas px-4 py-3 text-ink placeholder:text-muted";
-const selectClass =
-  "h-11 w-full rounded-lg border border-border bg-canvas px-4 text-ink";
+  "min-h-36 w-full rounded-lg border border-border bg-white px-4 py-3 text-ink placeholder:text-muted";
 const labelClass =
   "block font-mono text-xs uppercase tracking-[0.16em] text-muted";
 const errorClass = "mt-2 text-sm text-accent";
@@ -46,8 +43,6 @@ export function ContactForm({
   const [email, setEmail] = React.useState("");
   const [organisation, setOrganisation] = React.useState("");
   const [goal, setGoal] = React.useState(prefillGoal);
-  const [timeline, setTimeline] = React.useState("");
-  const [budget, setBudget] = React.useState("");
   const [errors, setErrors] = React.useState<FieldErrors>({});
   const [status, setStatus] = React.useState<Status>("idle");
 
@@ -80,8 +75,6 @@ export function ContactForm({
     setEmail("");
     setOrganisation("");
     setGoal(prefillGoal);
-    setTimeline("");
-    setBudget("");
     setErrors({});
     setStatus("idle");
   }
@@ -114,7 +107,7 @@ export function ContactForm({
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-2xl border border-border bg-canvas p-6 sm:p-8"
+      className="rounded-2xl border border-border bg-white p-6 sm:p-8"
     >
       <div className="space-y-6">
         {/* Name */}
@@ -201,53 +194,6 @@ export function ContactForm({
               {errors.goal}
             </p>
           )}
-        </div>
-
-        <div className="grid gap-6 sm:grid-cols-2">
-          {/* Timeline */}
-          <div>
-            <label htmlFor="timeline" className={labelClass}>
-              Timeline
-            </label>
-            <select
-              id="timeline"
-              name="timeline"
-              value={timeline}
-              onChange={(e) => setTimeline(e.target.value)}
-              className={`mt-2 ${selectClass}`}
-            >
-              <option value="">Select a timeline</option>
-              {contact.timelines.map((t) => (
-                <option key={t} value={t}>
-                  {t}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {/* Budget */}
-          <div>
-            <label htmlFor="budget" className={labelClass}>
-              Budget range{" "}
-              <span className="normal-case tracking-normal text-muted">
-                (optional)
-              </span>
-            </label>
-            <select
-              id="budget"
-              name="budget"
-              value={budget}
-              onChange={(e) => setBudget(e.target.value)}
-              className={`mt-2 ${selectClass}`}
-            >
-              <option value="">Select a range</option>
-              {contact.budgets.map((b) => (
-                <option key={b} value={b}>
-                  {b}
-                </option>
-              ))}
-            </select>
-          </div>
         </div>
       </div>
 
