@@ -2,17 +2,26 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Menu, MoveRight, X } from "lucide-react";
 import { primaryNav } from "@/lib/site";
 import { Wordmark } from "@/components/ui/wordmark";
 import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const prevPathname = useRef(pathname);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -21,8 +30,12 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close menu on route change (only when pathname actually changes)
   useEffect(() => {
-    setOpen(false);
+    if (prevPathname.current !== pathname) {
+      prevPathname.current = pathname;
+      setOpen(false);
+    }
   }, [pathname]);
 
   useEffect(() => {
@@ -32,87 +45,102 @@ export function Navbar() {
     };
   }, [open]);
 
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
-
-  const linkClass = (active: boolean) =>
-    cn(
-      "inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm transition-colors",
-      active ? "text-ink font-medium" : "text-ink-soft hover:text-ink",
-    );
-
   return (
     <header
       className={cn(
-        "sticky top-0 z-50 transition-colors duration-300",
-        scrolled || open
-          ? "border-b border-border bg-canvas/85 backdrop-blur-md"
-          : "border-b border-transparent",
+        "sticky top-0 z-50 border-b border-border bg-canvas transition-shadow duration-300",
+        scrolled || open ? "shadow-[0_1px_0_var(--border)]" : "shadow-none"
       )}
     >
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-[84rem] items-center justify-between px-5 sm:px-8 lg:h-20"
+        className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4 sm:px-6 lg:h-16 lg:px-8 xl:max-w-6xl"
       >
+        {/* Logo / Wordmark */}
         <Link href="/" aria-label="AI Please — home" className="shrink-0">
           <Wordmark />
         </Link>
 
-        {/* Desktop nav */}
+        {/* Desktop Navigation */}
         <div className="hidden items-center gap-0.5 lg:flex">
-          {primaryNav.map((item) =>
-            item.children ? (
-              <div key={item.label} className="group relative">
-                <Link
-                  href={item.href}
-                  className={linkClass(isActive(item.href))}
-                >
-                  {item.label}
-                  <ChevronDown
-                    aria-hidden
-                    className="size-3.5 transition-transform duration-300 group-hover:rotate-180"
-                  />
-                </Link>
-                <div className="invisible absolute left-0 top-full pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
-                  <div className="w-[22rem] rounded-2xl border border-border bg-canvas p-2 shadow-[0_24px_70px_-30px_rgba(28,26,23,0.45)]">
-                    {item.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="block rounded-xl px-4 py-3 transition-colors hover:bg-sand"
-                      >
-                        <div className="text-sm font-medium text-ink">
-                          {child.label}
-                        </div>
-                        {child.description ? (
-                          <div className="mt-0.5 text-xs leading-relaxed text-muted">
-                            {child.description}
+          <NavigationMenu className="flex justify-start items-start">
+            <NavigationMenuList className="flex justify-start gap-1 flex-row">
+              {primaryNav.map((item) => (
+                <NavigationMenuItem key={item.label}>
+                  {item.children ? (
+                    <>
+                      <NavigationMenuTrigger className="font-medium text-sm text-ink-soft hover:text-ink data-[state=open]:text-ink">
+                        {item.label}
+                      </NavigationMenuTrigger>
+                      <NavigationMenuContent className="!w-[420px] p-4">
+                        <div className="flex flex-col lg:grid grid-cols-2 gap-4">
+                          <div className="flex flex-col h-full justify-between">
+                            <div className="flex flex-col">
+                              <p className="text-base font-medium text-ink">
+                                {item.label}
+                              </p>
+                              <p className="text-muted text-sm mt-1">
+                                Explore our {item.label.toLowerCase()} offerings.
+                              </p>
+                            </div>
+                            <Button href="/contact" size="sm" className="mt-8">
+                              Book a call today
+                            </Button>
                           </div>
-                        ) : null}
+                          <div className="flex flex-col text-sm h-full justify-end">
+                            {item.children.map((subItem) => (
+                              <NavigationMenuLink
+                                key={subItem.href}
+                                href={subItem.href}
+                                className="flex flex-row justify-between items-center hover:bg-sand py-2.5 px-3 rounded-xl transition-colors"
+                              >
+                                <div className="flex flex-col gap-0.5">
+                                  <span className="font-medium text-ink">
+                                    {subItem.label}
+                                  </span>
+                                  {subItem.description && (
+                                    <span className="text-xs text-muted leading-relaxed">
+                                      {subItem.description}
+                                    </span>
+                                  )}
+                                </div>
+                                <MoveRight className="w-4 h-4 text-muted shrink-0 ml-2" />
+                              </NavigationMenuLink>
+                            ))}
+                          </div>
+                        </div>
+                      </NavigationMenuContent>
+                    </>
+                  ) : (
+                    <NavigationMenuLink asChild>
+                      <Link
+                        href={item.href}
+                        className={cn(
+                          "inline-flex items-center gap-1 rounded-full px-3.5 py-2 text-sm transition-colors",
+                          pathname === item.href ||
+                            (item.href !== "/" && pathname.startsWith(item.href))
+                            ? "font-medium text-ink"
+                            : "text-ink-soft hover:text-ink"
+                        )}
+                      >
+                        {item.label}
                       </Link>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={linkClass(isActive(item.href))}
-              >
-                {item.label}
-              </Link>
-            ),
-          )}
+                    </NavigationMenuLink>
+                  )}
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
 
+        {/* Desktop CTA */}
         <div className="hidden lg:block">
           <Button href="/contact" size="sm">
             Let&apos;s Talk
           </Button>
         </div>
 
-        {/* Mobile toggle */}
+        {/* Mobile Menu Toggle */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -124,45 +152,53 @@ export function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      <div
-        className={cn(
-          "fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto bg-canvas px-5 pb-10 pt-4 sm:px-8 lg:hidden",
-          open ? "block" : "hidden",
-        )}
-      >
-        <ul className="divide-y divide-border">
-          {primaryNav.map((item) => (
-            <li key={item.label} className="py-1">
-              <Link
-                href={item.href}
-                className="flex items-center justify-between py-3 text-lg text-ink"
-              >
-                {item.label}
-              </Link>
-              {item.children ? (
-                <ul className="mb-2 ml-1 space-y-1 border-l border-border pl-4">
-                  {item.children.map((child) => (
-                    <li key={child.href}>
-                      <Link
-                        href={child.href}
-                        className="block py-2 text-sm text-ink-soft"
-                      >
-                        {child.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
-            </li>
-          ))}
-        </ul>
-        <div className="mt-6">
-          <Button href="/contact" size="lg" className="w-full">
-            Let&apos;s Talk
-          </Button>
+      {/* Mobile Menu */}
+      {open && (
+        <div className="fixed inset-x-0 bottom-0 top-14 z-40 overflow-y-auto border-t border-border bg-canvas px-4 pb-10 pt-4 sm:px-6 lg:hidden">
+          <div className="flex flex-col gap-6">
+            {primaryNav.map((item) => (
+              <div key={item.label}>
+                <div className="flex flex-col gap-2">
+                  {item.children ? (
+                    <>
+                      <div className="flex justify-between items-center py-2">
+                        <span className="text-lg font-medium text-ink">
+                          {item.label}
+                        </span>
+                      </div>
+                      {item.children.map((subItem) => (
+                        <Link
+                          key={subItem.href}
+                          href={subItem.href}
+                          className="flex justify-between items-center py-2 pl-4 border-l border-border"
+                        >
+                          <span className="text-ink-soft">{subItem.label}</span>
+                          <MoveRight className="w-4 h-4 text-muted" />
+                        </Link>
+                      ))}
+                    </>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="flex justify-between items-center py-2"
+                    >
+                      <span className="text-lg font-medium text-ink">
+                        {item.label}
+                      </span>
+                      <MoveRight className="w-4 h-4 text-muted" />
+                    </Link>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8">
+            <Button href="/contact" size="lg" className="w-full">
+              Let&apos;s Talk
+            </Button>
+          </div>
         </div>
-      </div>
+      )}
     </header>
   );
 }

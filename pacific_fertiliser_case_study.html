@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: Pacific Fertiliser | NEMOCLAW</title>
+<meta name="description" content="How an Australian fertiliser supplier put locally deployed AI chat agents on top of its internal database, so its people spend less time finding answers and more time using them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A2B4A;
+    --navy-deep: #0F1B36;
+    --navy-soft: #4A5A7A;
+    --navy-pale: #EEF1F6;
+    --bg: #F5F6F8;
+    --white: #FFFFFF;
+    --amber: #D97706;
+    --green: #059669;
+    --red: #DC2626;
+    --line: #DDE3EC;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--navy-deep);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--navy); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Top bar ---------- */
+  header.site {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  header.site .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .wordmark {
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    font-size: 14px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--navy-soft);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--navy-deep);
+    color: var(--navy-pale);
+    overflow: hidden;
+  }
+  .hero .wrap {
+    padding-top: 88px;
+    padding-bottom: 0;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(34px, 5.2vw, 58px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    max-width: 17.5em;
+    color: var(--white);
+  }
+  .hero p.standfirst {
+    margin-top: 26px;
+    max-width: 620px;
+    font-size: 18px;
+    color: #B9C3D6;
+  }
+  /* Signature element: a query line. One trunk from the database on the
+     left, branching out to agent endpoints, drawn on load and resting as
+     a settled network. Echoes the shape of the deployment itself. */
+  .trace {
+    display: block;
+    width: 100%;
+    height: 130px;
+    margin-top: 56px;
+  }
+  .trace path.flow {
+    fill: none;
+    stroke: #6E82AB;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .trace rect.db {
+    fill: none;
+    stroke: #6E82AB;
+    stroke-width: 1.5;
+  }
+  .trace circle.node {
+    fill: var(--amber);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .trace path.flow {
+      stroke-dasharray: 2400;
+      stroke-dashoffset: 2400;
+      animation: draw 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+    .trace circle.node {
+      opacity: 0;
+      animation: node-in 0.6s ease forwards;
+    }
+    .trace circle.node:nth-of-type(1) { animation-delay: 2.2s; }
+    .trace circle.node:nth-of-type(2) { animation-delay: 2.5s; }
+    .trace circle.node:nth-of-type(3) { animation-delay: 2.8s; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes node-in { to { opacity: 1; } }
+  }
+
+  /* ---------- At a glance ---------- */
+  .glance {
+    background: var(--navy);
+    color: var(--navy-pale);
+  }
+  .glance .wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .glance .cell {
+    padding: 26px 22px 26px 0;
+    border-top: 1px solid rgba(238, 241, 246, 0.14);
+  }
+  .glance .cell + .cell { padding-left: 22px; }
+  .glance dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8B9AB8;
+    margin-bottom: 6px;
+  }
+  .glance dd { font-size: 15px; line-height: 1.5; }
+
+  /* ---------- Article body ---------- */
+  article { padding: 40px 0 0; }
+  section.block {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 640px);
+    gap: 48px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  section.block:last-of-type { border-bottom: none; }
+  .block .marker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+    padding-top: 10px;
+  }
+  .block .marker .num {
+    display: block;
+    font-size: 26px;
+    letter-spacing: 0;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .block h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.25;
+    color: var(--navy-deep);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .block p { margin-bottom: 18px; color: #2A3854; }
+  .block p:last-child { margin-bottom: 0; }
+  .block p strong { color: var(--navy-deep); font-weight: 600; }
+
+  /* ---------- Feature strip ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .feature {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .feature h3 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .feature p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+    margin: 0;
+  }
+
+  /* ---------- Timeline ---------- */
+  .phases { margin-top: 26px; }
+  .phase {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .phase:first-child { border-top: none; padding-top: 4px; }
+  .phase .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--navy);
+    margin-top: 7px;
+    justify-self: center;
+  }
+  .phase.current .dot {
+    background: var(--amber);
+    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.15);
+  }
+  .phase h3 {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+  .phase h3 .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-left: 10px;
+  }
+  .phase p {
+    font-size: 14.5px;
+    color: var(--navy-soft);
+    margin: 4px 0 0;
+  }
+
+  /* ---------- Status table ---------- */
+  .status-list { margin-top: 26px; }
+  .status-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .badge.live { background: rgba(5, 150, 105, 0.1); color: var(--green); }
+  .badge.build { background: rgba(217, 119, 6, 0.12); color: var(--amber); }
+  .badge.road { background: var(--navy-pale); color: var(--navy-soft); }
+  .status-row p { font-size: 15px; color: #2A3854; margin: 0; }
+
+  /* ---------- Pull quote ---------- */
+  .quote {
+    background: var(--navy-pale);
+    border-radius: 12px;
+    padding: 44px 48px;
+    margin: 64px 0;
+  }
+  .quote blockquote {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--navy);
+    max-width: 640px;
+  }
+  .quote cite {
+    display: block;
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    color: var(--navy-soft);
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    background: var(--navy-deep);
+    color: #8B9AB8;
+    margin-top: 72px;
+  }
+  footer.site .wrap {
+    padding-top: 44px;
+    padding-bottom: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  footer.site .fine {
+    font-size: 13px;
+    max-width: 520px;
+  }
+  footer.site .wordmark { color: var(--navy-pale); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    section.block { grid-template-columns: 1fr; gap: 14px; padding: 44px 0; }
+    .block .marker { padding-top: 0; }
+    .block .marker .num { display: inline; margin-right: 8px; }
+    .features { grid-template-columns: 1fr; }
+    .quote { padding: 32px 26px; }
+    .quote blockquote { font-size: 20px; }
+    .status-row { grid-template-columns: 1fr; gap: 8px; }
+    .hero .wrap { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">NEMOCLAW</a>
+    <span class="crumb">Case studies / Pacific Fertiliser</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Case study &middot; Pacific Fertiliser, Australia</span>
+    <h1>The answers were in the database. The people who needed them were on the phone, at the plant, or on the road.</h1>
+    <p class="standfirst">How an Australian fertiliser supplier put locally deployed Nemoclaw chat agents on top of its internal database, so its people spend less time chasing information and more time acting on it, without a single record leaving the building.</p>
+  </div>
+  <svg class="trace" viewBox="0 0 1440 130" preserveAspectRatio="none" aria-hidden="true">
+    <rect class="db" x="120" y="48" width="56" height="34" rx="4"/>
+    <path class="flow" d="M176,65 L560,65 L620,65 L700,30 L1180,30 M620,65 L1180,65 M620,65 L700,100 L1180,100"/>
+    <circle class="node" cx="1180" cy="30" r="4"/>
+    <circle class="node" cx="1180" cy="65" r="4"/>
+    <circle class="node" cx="1180" cy="100" r="4"/>
+  </svg>
+</div>
+
+<div class="glance">
+  <div class="wrap">
+    <dl style="display: contents;">
+      <div class="cell"><dt>Client</dt><dd>Pacific Fertiliser Pty Ltd</dd></div>
+      <div class="cell"><dt>Industry</dt><dd>Fertiliser supply, blending and logistics</dd></div>
+      <div class="cell"><dt>Engagement</dt><dd>Consultancy, integration and deployment, ongoing</dd></div>
+      <div class="cell"><dt>Deployment</dt><dd>On-premises Nemoclaw chat agents</dd></div>
+      <div class="cell"><dt>Data</dt><dd>Stays on the company's own infrastructure</dd></div>
+    </dl>
+  </div>
+</div>
+
+<article class="wrap">
+
+  <section class="block">
+    <div class="marker"><span class="num">01</span>The company</div>
+    <div>
+      <h2>A products business that runs on knowledge as much as tonnage</h2>
+      <p>Pacific Fertiliser is an Australian owned company supplying fertilisers, agricultural minerals and liquid nutrients to the agricultural, industrial, civil and mining sectors. From bulk granular fertiliser out of the major ports to tailored NPK and mineral blends, the business spans supply, custom blending, port logistics and spreading services across eastern Australia, with processing plants servicing a large portion of the eastern states.</p>
+      <p>That breadth is the point, and the challenge. Every quote, blend, delivery and account touches product specifications, pricing history, freight arrangements, stock positions and customer records. The knowledge exists, spread across the company's internal systems and the experience of long-serving staff. The question the business brought to us was simple: how do we get that knowledge to whoever needs it, the moment they need it?</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">02</span>The problem</div>
+    <div>
+      <h2>Skilled people spending their day as the search engine</h2>
+      <p>In a business like this, the most experienced people become the lookup layer. A customer calls about a blend they ordered two seasons ago. Dispatch wants to know what went out on a particular run. Someone in accounts is reconstructing the history behind an account query. Each answer exists in the internal database, but retrieving it means the right person stopping what they are doing, opening the right system, and knowing where to look.</p>
+      <p>None of these interruptions is large on its own. Together they set the ceiling on how much a small, capable team can get through in a day. The goal was never to replace anyone's judgement. It was to stop paying senior people to do retrieval, and let them spend that time on the decisions only they can make.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">03</span>The approach</div>
+    <div>
+      <h2>Consultancy first: understand the business before touching the systems</h2>
+      <p>The engagement did not start with software. It started with time inside the business, sitting with the people who answer the phones, run the plants and manage the accounts, and mapping how work actually moves through the company: which systems hold what, who asks whom for what, and where the day's time genuinely goes.</p>
+      <p>That mapping extended to the current software estate. Rather than proposing a migration or a replacement, we documented the systems Pacific Fertiliser already runs, how its internal database is structured, and where the reliable sources of truth sit. The design principle that came out of that work is worth stating plainly: <strong>the technology adapts to the business, not the other way around</strong>. The team keeps the systems they know. The agents are a new way in, not a new system to learn.</p>
+      <p>It also told us where agents would not help. Some questions genuinely belong with a person, and the deployment was scoped to leave those alone. A tool that knows its limits earns more trust than one that pretends not to have any.</p>
+      <div class="phases">
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Discovery inside the business</h3><p>Workflow mapping across sales, dispatch and administration, identifying where time was being lost to information retrieval.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Systems and data audit</h3><p>The existing software estate and internal database documented, sources of truth identified, integration points agreed.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Local deployment design</h3><p>Nemoclaw agents specified for on-premises operation with read access to the internal database, scoped by role.</p></div>
+        </div>
+        <div class="phase current">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Rollout and refinement <span class="tag">In progress</span></h3><p>Agents live with the team, tuned against real questions from real workdays, with scope expanding as trust builds.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">04</span>What was built</div>
+    <div>
+      <h2>Chat agents that already know where everything is</h2>
+      <p>The deployment gives Pacific Fertiliser's team Nemoclaw chat agents running locally, connected directly to the company's internal database. Staff ask questions in plain language, in the middle of whatever they are doing, and get answers drawn from the company's own records rather than from the open internet.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>Plain-language access to company data</h3>
+          <p>Product, order, customer and operational questions answered conversationally, without needing to know which system or screen holds the record.</p>
+        </div>
+        <div class="feature">
+          <h3>Answers grounded in the source</h3>
+          <p>Responses draw on the internal database and point back to the underlying records, so anything worth acting on can be verified in seconds.</p>
+        </div>
+        <div class="feature">
+          <h3>Scoped to the role</h3>
+          <p>Each agent sees what its users are entitled to see. Access follows the permissions the business already maintains, not a new parallel set.</p>
+        </div>
+        <div class="feature">
+          <h3>Built into the working day</h3>
+          <p>The agents sit alongside existing tools rather than replacing them, so nothing about how the team quotes, dispatches or reconciles had to change.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">05</span>Under the hood</div>
+    <div>
+      <h2>Local by design: the data never leaves the business</h2>
+      <p>The defining architectural decision is that everything runs on Pacific Fertiliser's own infrastructure. The agents, the database connection and the conversation history all stay on premises. Customer records, pricing and commercial history are the company's competitive knowledge, and the deployment was designed so that none of it is sent to an external service to be useful.</p>
+      <p>Database access is read-focused and permissioned, connected through the structures the business already maintains rather than a copy that drifts out of date. Because the agents were integrated with the existing software setup rather than around it, the systems the team relies on remain the systems of record. The agents make those systems easier to reach; they do not compete with them.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">06</span>Where it stands</div>
+    <div>
+      <h2>An honest account of a live engagement</h2>
+      <p>This is an ongoing deployment, and this page will grow as it does. Here is where things sit: what is running, what is being refined, and what is under discussion.</p>
+      <div class="status-list">
+        <div class="status-row">
+          <span><span class="badge live">Delivered</span></span>
+          <p>Business and systems discovery, integration design against the existing software estate, and local deployment of Nemoclaw chat agents connected to the internal database.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge build">In refinement</span></span>
+          <p>Agent tuning against the team's real question patterns, and progressive expansion of the data each role can reach.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge road">Under discussion</span></span>
+          <p>Further agent capabilities shaped by what the team asks for once the everyday retrieval load lifts. Scope to be confirmed with Pacific Fertiliser.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote below is placeholder copy. To confirm with Pacific Fertiliser before publishing. -->
+  <div class="quote">
+    <blockquote>&ldquo;Placeholder pull quote from Pacific Fertiliser about getting answers without pulling someone off what they were doing. To confirm before this page goes live.&rdquo;</blockquote>
+    <cite>Name and role to confirm &middot; Pacific Fertiliser</cite>
+  </div>
+
+</article>
+
+<footer class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">NEMOCLAW</a>
+    <p class="fine">Locally deployed AI chat agents for Australian businesses. Consultancy-led integration with the systems you already run, with your data staying on your own infrastructure.</p>
+  </div>
+</footer>
+
+</body>
+</html>

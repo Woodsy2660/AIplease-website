@@ -17,7 +17,7 @@ export default function PrivacyPage() {
       <Container className="max-w-3xl">
         <Reveal>
           <Eyebrow>Legal</Eyebrow>
-          <h1 className="mt-6 text-4xl tracking-tight sm:text-5xl">
+          <h1 className="mt-5 text-3xl tracking-tight sm:text-4xl">
             Privacy Policy
           </h1>
           <p className="mt-4 font-mono text-xs uppercase tracking-[0.18em] text-muted">

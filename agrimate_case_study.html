@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: Agri-Mate | NEWTERRA</title>
+<meta name="description" content="How a citrus orchard in the NSW Riverina turned its harvest into live, row-level data with Agri-Mate, Newterra's on-farm productivity app.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #0F4B32;
+    --green-deep: #122218;
+    --green-soft: #4A5A50;
+    --green-pale: #EEF2EC;
+    --bg: #F5F7F4;
+    --white: #FFFFFF;
+    --gold: #F0A429;
+    --ok: #059669;
+    --red: #DC2626;
+    --line: #D3DDD3;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--green-deep);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--green); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Top bar ---------- */
+  header.site {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  header.site .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .wordmark {
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    font-size: 14px;
+    color: var(--green);
+    text-decoration: none;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--green-soft);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--green-deep);
+    color: var(--green-pale);
+    overflow: hidden;
+  }
+  .hero .wrap {
+    padding-top: 88px;
+    padding-bottom: 0;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(34px, 5.2vw, 58px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    max-width: 17.5em;
+    color: var(--white);
+  }
+  .hero p.standfirst {
+    margin-top: 26px;
+    max-width: 620px;
+    font-size: 18px;
+    color: #BCCBBE;
+  }
+  /* The tally trace is the signature element. It draws once on load like a
+     running bin count climbing through the day's pick, then rests. */
+  .trace {
+    display: block;
+    width: 100%;
+    height: 120px;
+    margin-top: 56px;
+  }
+  .trace path.beat {
+    fill: none;
+    stroke: #6F8B77;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .trace circle.pulse {
+    fill: var(--gold);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .trace path.beat {
+      stroke-dasharray: 2400;
+      stroke-dashoffset: 2400;
+      animation: draw 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+    .trace circle.pulse {
+      opacity: 0;
+      animation: pulse-in 0.6s ease 2.6s forwards;
+    }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes pulse-in { to { opacity: 1; } }
+  }
+
+  /* ---------- At a glance ---------- */
+  .glance {
+    background: var(--green);
+    color: var(--green-pale);
+  }
+  .glance .wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .glance .cell {
+    padding: 26px 22px 26px 0;
+    border-top: 1px solid rgba(238, 242, 236, 0.14);
+  }
+  .glance .cell + .cell { padding-left: 22px; }
+  .glance dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #9AB3A0;
+    margin-bottom: 6px;
+  }
+  .glance dd { font-size: 15px; line-height: 1.5; }
+
+  /* ---------- Article body ---------- */
+  article { padding: 40px 0 0; }
+  section.block {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 640px);
+    gap: 48px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  section.block:last-of-type { border-bottom: none; }
+  .block .marker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green-soft);
+    padding-top: 10px;
+  }
+  .block .marker .num {
+    display: block;
+    font-size: 26px;
+    letter-spacing: 0;
+    color: var(--green);
+    margin-bottom: 4px;
+  }
+  .block h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.25;
+    color: var(--green-deep);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .block p { margin-bottom: 18px; color: #263A2E; }
+  .block p:last-child { margin-bottom: 0; }
+  .block p strong { color: var(--green-deep); font-weight: 600; }
+
+  /* ---------- Feature strip ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .feature {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .feature h3 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--green);
+    margin-bottom: 6px;
+  }
+  .feature p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--green-soft);
+    margin: 0;
+  }
+
+  /* ---------- Timeline ---------- */
+  .phases { margin-top: 26px; }
+  .phase {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .phase:first-child { border-top: none; padding-top: 4px; }
+  .phase .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--green);
+    margin-top: 7px;
+    justify-self: center;
+  }
+  .phase.current .dot {
+    background: var(--gold);
+    box-shadow: 0 0 0 4px rgba(240, 164, 41, 0.18);
+  }
+  .phase h3 {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--green-deep);
+  }
+  .phase h3 .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-left: 10px;
+  }
+  .phase p {
+    font-size: 14.5px;
+    color: var(--green-soft);
+    margin: 4px 0 0;
+  }
+
+  /* ---------- Status table ---------- */
+  .status-list { margin-top: 26px; }
+  .status-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .badge.live { background: rgba(5, 150, 105, 0.1); color: var(--ok); }
+  .badge.build { background: rgba(240, 164, 41, 0.16); color: #B87A12; }
+  .badge.road { background: var(--green-pale); color: var(--green-soft); }
+  .status-row p { font-size: 15px; color: #263A2E; margin: 0; }
+
+  /* ---------- Pull quote ---------- */
+  .quote {
+    background: var(--green-pale);
+    border-radius: 12px;
+    padding: 44px 48px;
+    margin: 64px 0;
+  }
+  .quote blockquote {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--green);
+    max-width: 640px;
+  }
+  .quote cite {
+    display: block;
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    color: var(--green-soft);
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    background: var(--green-deep);
+    color: #9AB3A0;
+    margin-top: 72px;
+  }
+  footer.site .wrap {
+    padding-top: 44px;
+    padding-bottom: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  footer.site .fine {
+    font-size: 13px;
+    max-width: 520px;
+  }
+  footer.site .wordmark { color: var(--green-pale); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    section.block { grid-template-columns: 1fr; gap: 14px; padding: 44px 0; }
+    .block .marker { padding-top: 0; }
+    .block .marker .num { display: inline; margin-right: 8px; }
+    .features { grid-template-columns: 1fr; }
+    .quote { padding: 32px 26px; }
+    .quote blockquote { font-size: 20px; }
+    .status-row { grid-template-columns: 1fr; gap: 8px; }
+    .hero .wrap { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">NEWTERRA</a>
+    <span class="crumb">Case studies / Agri-Mate</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Case study &middot; Agri-Mate, NSW Riverina</span>
+    <h1>The fruit was coming off the trees. The information was staying in the orchard.</h1>
+    <p class="standfirst">How a citrus operation in the NSW Riverina turned its harvest into live, row-level data with Agri-Mate, Newterra's on-farm productivity app, tracking every picker, every bin and every block without slowing a single crew down.</p>
+  </div>
+  <svg class="trace" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path class="beat" d="M0,104 L120,104 L150,96 L210,96 L240,84 L330,84 L360,88 L420,88 L450,70 L540,70 L570,74 L640,74 L668,54 L760,54 L788,58 L860,58 L888,40 L980,40 L1010,44 L1090,44 L1118,28 L1210,28 L1240,32 L1320,32 L1348,20 L1440,20"/>
+    <circle class="pulse" cx="1348" cy="20" r="4"/>
+  </svg>
+</div>
+
+<div class="glance">
+  <div class="wrap">
+    <dl style="display: contents;">
+      <div class="cell"><dt>Client</dt><dd>Citrus orchard, NSW Riverina</dd></div>
+      <div class="cell"><dt>Operation</dt><dd>Navel &amp; Valencia harvest, contract picking crews</dd></div>
+      <div class="cell"><dt>Engagement</dt><dd>Design, build and in-season deployment, ongoing</dd></div>
+      <div class="cell"><dt>Delivery</dt><dd>Mobile-first web app, built for gloves, glare and patchy signal</dd></div>
+      <div class="cell"><dt>Stack</dt><dd>React, Supabase (PostgreSQL), n8n</dd></div>
+    </dl>
+  </div>
+</div>
+
+<article class="wrap">
+
+  <section class="block">
+    <div class="marker"><span class="num">01</span>The farm</div>
+    <div>
+      <h2>A working orchard where the harvest moved faster than the paperwork</h2>
+      <p>The operation is a family-run citrus orchard in the NSW Riverina, the heart of Australian citrus country, running seasonal picking crews across multiple blocks and varieties through the winter harvest. Like most growers in the region, the systems holding it together were paper tally cards, a supervisor's memory and a whiteboard back at the shed.</p>
+      <p>Every bin picked generated information: who picked it, which block and row it came from, when it was filled and where it was left. Almost none of that survived the day. Tally cards were reconciled by hand after dark, bins sat in rows longer than anyone realised, and questions like "which crew is actually ahead" or "what did block 7 yield last week" could only be answered roughly, and only after the fact.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">02</span>The problem</div>
+    <div>
+      <h2>Harvest decisions were being made on instinct, hours behind the orchard</h2>
+      <p>Harvest is the highest-stakes window of the citrus year. Fruit quality decays with every hour a full bin sits in the sun, picker payments hinge on accurate tallies, and crew productivity varies enormously between workers and blocks. Yet the people managing it, the grower and their supervisors, were working from a picture that was at best a day old and at worst a guess.</p>
+      <p>The brief was not to bolt an enterprise farm-management suite onto a working orchard. Those tools assume office time nobody has and training nobody wants. The brief was a tool that lives where the work happens: something a supervisor can use one-handed in the row, that captures the harvest as it happens and hands the grower a live picture without adding a single administrative step.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">03</span>The approach</div>
+    <div>
+      <h2>Built in the rows, not in a boardroom</h2>
+      <p>Agri-Mate was designed by founders who have picked, supervised and managed citrus harvests themselves. Rather than starting from a feature list, the build started from the physical reality of a picking day: gloved hands, bright glare, dusty screens, patchy mobile coverage between rows, and workers for whom English is often a second language. Every screen was tested against one question: can this be done in seconds, standing next to a bin?</p>
+      <p>The data model mirrors how an orchard actually thinks: blocks, rows, varieties, crews and bins. Each bin scan links a picker, a location and a timestamp, so the same tap that credits a worker's tally also plots the bin on a map and feeds the day's yield picture. Nothing is entered twice, and nothing depends on someone remembering to write it down.</p>
+      <p>One principle runs through the product: <strong>capture without ceremony</strong>. If recording the harvest ever competes with doing the harvest, the harvest wins, so the recording had to become part of the motion itself.</p>
+      <div class="phases">
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Discovery in the orchard</h3><p>Picking days shadowed end to end, tally card and payment workflows mapped, failure points identified from bin loss to disputed counts.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Field-first prototype</h3><p>A deliberately minimal bin-tracking flow built and put in supervisors' hands mid-season, refined against real crews rather than assumptions.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Live deployment through harvest</h3><p>Picker tallies, bin locations and block-level counts running in production across the season, with the paper system retired block by block.</p></div>
+        </div>
+        <div class="phase current">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Workforce and machinery layer <span class="tag">In progress</span></h3><p>Worker onboarding, digital sign-in and time capture, working-rights document storage and equipment-hour logging being added on the same foundation.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">04</span>What was built</div>
+    <div>
+      <h2>Agri-Mate: the harvest, visible in real time</h2>
+      <p>In its current form, Agri-Mate tracks harvest worker output as it happens: who picked what, how much was picked, and where every bin sits in the orchard. The result is a shorter path from tree to truck, live visibility over workforce performance, and a tally that both grower and picker can trust.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>Picker &amp; bin tracking</h3>
+          <p>Every bin is credited to the picker who filled it, building a live count by worker, team, block and day, and an evidence base both sides of a payment can agree on.</p>
+        </div>
+        <div class="feature">
+          <h3>Bin location map</h3>
+          <p>GPS and row-level positioning of every full bin, so tractor and forklift operators drive to the fruit rather than searching for it, shortening the time from picking to packing.</p>
+        </div>
+        <div class="feature">
+          <h3>Supervisor dashboard</h3>
+          <p>Real-time visibility of crew productivity across blocks, surfacing who is ahead, who needs support and where the day is actually up to, while it can still be acted on.</p>
+        </div>
+        <div class="feature">
+          <h3>Field-to-shed link</h3>
+          <p>The same data flows straight into Newterra's back office, so tallies, payroll inputs and yield records arrive reconciled instead of being rebuilt from paper each night.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">05</span>Under the hood</div>
+    <div>
+      <h2>Simple in the field, structured underneath</h2>
+      <p>Agri-Mate runs as a mobile-first React application on a Supabase (PostgreSQL) backend, with n8n handling the workflow automation that connects field data to Newterra's bookkeeping and payroll processes. Data is captured at block, variety and task level and lands in a standardised model, the same structure used across every Newterra client, which is what makes cross-farm and cross-season comparison possible later.</p>
+      <p>Because the app feeds Newterra's broader data engine, every bin scanned strengthens more than one orchard's picture. Aggregated and de-identified, the data underpins benchmarking, yield and cost insights, and future procurement and risk offerings for participating growers, while each individual farm's information remains its own.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">06</span>Where it stands</div>
+    <div>
+      <h2>An honest roadmap, in the product and on this page</h2>
+      <p>Agri-Mate is a working tool with a deliberate trajectory: from harvest tracker, to the core operating system for orchards and broadacre farms. This is what is running, what is being built, and what is planned.</p>
+      <div class="status-list">
+        <div class="status-row">
+          <span><span class="badge live">Delivered</span></span>
+          <p>Real-time picker and bin tracking, live counts by worker, team, block and day, GPS/row-level bin location, and supervisor visibility across the harvest.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge build">In build</span></span>
+          <p>Workforce layer: central worker register, onboarding workflows, digital sign-in and time tracking, and storage of Australian working-rights and compliance documents.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge road">Planned</span></span>
+          <p>Machinery and asset tracking with equipment-hour logging and maintenance alerts, task scheduling from planting to harvest, sensor integrations, and cross-farm benchmarking feeding machine-learning-driven recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote below is placeholder copy. To confirm with the pilot grower before publishing. -->
+  <div class="quote">
+    <blockquote>&ldquo;Placeholder pull quote from the pilot grower about knowing exactly where every bin and every picker is up to before smoko, instead of finding out from tally cards that night. To confirm before this page goes live.&rdquo;</blockquote>
+    <cite>Grower &middot; Citrus orchard, NSW Riverina</cite>
+  </div>
+
+</article>
+
+<footer class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">NEWTERRA</a>
+    <p class="fine">The specialist back office for Australian farms and agribusinesses. Agri-Mate is Newterra's on-farm productivity app, built by growers, run from the rows, and feeding one data engine for the whole operation. ABN 93 686 402 737.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -23,12 +23,12 @@ export default async function Page({
   return (
     <Section tone="canvas">
       <Container>
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
           {/* Left: invitation + commitments */}
           <div>
             <Reveal>
               <Eyebrow>Contact</Eyebrow>
-              <h1 className="mt-6 text-5xl font-semibold leading-[1.02] tracking-tight sm:text-6xl">
+              <h1 className="mt-5 text-4xl font-semibold leading-[1.02] tracking-tight sm:text-[2.75rem]">
                 {contact.heading}
               </h1>
             </Reveal>

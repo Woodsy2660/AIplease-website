@@ -26,7 +26,7 @@ export default function HRpleasePage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border grain-rules">
-        <Container className="py-16 sm:py-24 lg:py-28">
+        <Container className="py-12 sm:py-16 lg:py-20">
           <Reveal>
             <Link
               href="/projects"
@@ -51,26 +51,22 @@ export default function HRpleasePage() {
               />
             </Reveal>
             <Reveal delay={0.1}>
-              <h1 className="mt-6 text-[2.5rem] font-semibold leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl">
+              <h1 className="mt-5 text-[2.1rem] font-semibold leading-[1.04] tracking-tight sm:text-4xl lg:text-[2.75rem]">
                 {hrplease.tagline}
               </h1>
             </Reveal>
             <Reveal delay={0.16}>
-              <p className="mt-6 max-w-2xl text-xl leading-relaxed text-ink-soft sm:text-2xl">
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ink-soft sm:text-xl">
                 {hrplease.value}
               </p>
             </Reveal>
             <Reveal delay={0.22}>
               <div className="mt-9 flex flex-wrap gap-3">
-                <Button href="/contact?product=hrplease" size="lg">
+                <Button href="/contact?product=hrplease">
                   Request access
                   <ArrowRight className="size-4" />
                 </Button>
-                <Button
-                  href="/contact?product=hrplease"
-                  size="lg"
-                  variant="secondary"
-                >
+                <Button href="/contact?product=hrplease" variant="secondary">
                   Ask a question
                 </Button>
               </div>
@@ -84,16 +80,16 @@ export default function HRpleasePage() {
         <Container>
           <Reveal>
             <Eyebrow>Who it&apos;s for</Eyebrow>
-            <h2 className="mt-5 max-w-3xl text-4xl sm:text-5xl">
+            <h2 className="mt-4 max-w-3xl text-3xl sm:text-4xl">
               Built for the teams without HR on call.
             </h2>
           </Reveal>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border sm:grid-cols-2">
+          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border sm:grid-cols-2">
             {hrplease.audiences.map((audience, i) => (
               <Reveal
                 key={audience}
                 delay={i * 0.06}
-                className="flex flex-col bg-sand p-8 sm:p-10"
+                className="flex flex-col bg-sand p-6 sm:p-7"
               >
                 <NumberedMarker value={`0${i + 1}`} />
                 <p className="mt-5 text-lg leading-relaxed text-ink-soft">
@@ -110,14 +106,14 @@ export default function HRpleasePage() {
         <Container>
           <Reveal>
             <Eyebrow>Capabilities</Eyebrow>
-            <h2 className="mt-5 max-w-3xl text-4xl sm:text-5xl">
+            <h2 className="mt-4 max-w-3xl text-3xl sm:text-4xl">
               From a legislation search to a sourced answer.
             </h2>
           </Reveal>
-          <ul className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border sm:grid-cols-2">
+          <ul className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border sm:grid-cols-2">
             {hrplease.capabilities.map((capability, i) => (
               <Reveal key={capability.title} delay={i * 0.06} className="h-full">
-                <li className="flex h-full flex-col bg-canvas p-8 sm:p-10">
+                <li className="flex h-full flex-col bg-canvas p-6 sm:p-7">
                   <div className="flex items-center gap-2">
                     <span
                       aria-hidden
@@ -140,10 +136,10 @@ export default function HRpleasePage() {
       {/* How it works */}
       <Section tone="ink" bordered>
         <Container>
-          <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+          <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:gap-10">
             <Reveal>
               <Eyebrow inverted>How it works</Eyebrow>
-              <h2 className="mt-5 text-4xl sm:text-5xl">
+              <h2 className="mt-4 text-3xl sm:text-4xl">
                 Every answer is traceable to source.
               </h2>
             </Reveal>

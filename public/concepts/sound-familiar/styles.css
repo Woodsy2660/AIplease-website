@@ -1,0 +1,193 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --chocolate: #291f16;
+  --stone: #e5e2dd;
+  --rock: #beb8aa;
+  --vermilion: #fe4939;
+  --ink-soft: #4a3f35;
+  --muted: #7a7268;
+  --white: #ffffff;
+  --max: 72rem;
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-mono: "Consolas", "IBM Plex Mono", monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--chocolate);
+  background: var(--white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.mock-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  background: var(--chocolate);
+  color: var(--stone);
+  font-size: 0.8125rem;
+}
+
+.mock-bar a {
+  color: var(--stone);
+  text-decoration: none;
+}
+
+.mock-bar a:hover {
+  text-decoration: underline;
+}
+
+.mock-bar .label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--vermilion);
+}
+
+.mock-hero {
+  padding: 2.5rem 1.25rem;
+  background: var(--white);
+  border-bottom: 1px solid rgba(41, 31, 22, 0.08);
+}
+
+.mock-hero-inner {
+  max-width: var(--max);
+  margin: 0 auto;
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 900px) {
+  .mock-hero-inner {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+.mock-hero h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  max-width: 14ch;
+}
+
+.mock-hero p {
+  margin-top: 1rem;
+  color: rgba(41, 31, 22, 0.7);
+  font-size: 1.125rem;
+}
+
+.mock-hero-photo {
+  aspect-ratio: 1;
+  border-radius: 0.5rem;
+  background: linear-gradient(145deg, var(--stone), var(--rock));
+}
+
+.section-headline {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--chocolate);
+}
+
+.marquee-band {
+  overflow: hidden;
+  background: var(--chocolate);
+  padding: 2.5rem 0;
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 100s linear infinite;
+  font-size: 1.0625rem;
+  color: var(--stone);
+}
+
+.marquee-track span {
+  white-space: nowrap;
+  padding-left: 3rem;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.cta-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--chocolate);
+  text-decoration: none;
+}
+
+.cta-link:hover {
+  opacity: 0.7;
+}
+
+.pillar-title {
+  font-weight: 600;
+  color: var(--chocolate);
+}
+
+.pillar-body {
+  color: var(--ink-soft);
+}
+
+.pillar-num {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--vermilion);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+    gap: 1rem 2rem;
+    padding: 0 1.5rem;
+  }
+
+  .marquee-track span {
+    white-space: normal;
+    padding: 0;
+    text-align: center;
+  }
+}

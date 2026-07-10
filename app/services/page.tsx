@@ -41,17 +41,17 @@ export default function ServicesPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border grain-rules">
-        <Container className="py-16 sm:py-24 lg:py-28">
+        <Container className="py-12 sm:py-16 lg:py-20">
           <Reveal>
             <Eyebrow>Services</Eyebrow>
           </Reveal>
           <Reveal delay={0.06}>
-            <h1 className="mt-6 max-w-4xl text-[2.7rem] font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-4xl text-[2.25rem] font-semibold leading-[1.02] tracking-tight sm:text-4xl lg:text-[2.75rem] xl:text-5xl">
               Where AI fits your business — and where it doesn&apos;t.
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
-            <p className="mt-6 max-w-2xl text-xl text-ink-soft sm:text-2xl">
+            <p className="mt-5 max-w-2xl text-lg text-ink-soft sm:text-xl">
               Three ways we work — strategy, build, and partnership — engineered
               to span the whole life of an AI system, from the first question to
               years after launch.
@@ -59,11 +59,11 @@ export default function ServicesPage() {
           </Reveal>
           <Reveal delay={0.18}>
             <div className="mt-9 flex flex-wrap gap-3">
-              <Button href="/contact" size="lg">
+              <Button href="/contact">
                 Let&apos;s Talk
                 <ArrowRight className="size-4" />
               </Button>
-              <Button href="/work" size="lg" variant="secondary">
+              <Button href="/work" variant="secondary">
                 See the work
               </Button>
             </div>
@@ -82,7 +82,7 @@ export default function ServicesPage() {
         <Container>
           <Reveal>
             <Eyebrow>How an engagement works</Eyebrow>
-            <h2 className="mt-5 max-w-3xl text-4xl sm:text-5xl">
+            <h2 className="mt-4 max-w-3xl text-3xl sm:text-4xl">
               From first conversation to a system that keeps earning its place.
             </h2>
             <p className="mt-5 max-w-xl text-lg text-ink-soft">
@@ -90,12 +90,12 @@ export default function ServicesPage() {
               of them — most partners stay for all three.
             </p>
           </Reveal>
-          <div className="mt-12 grid gap-px overflow-hidden rounded-2xl border border-border sm:mt-16 sm:grid-cols-3">
+          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border sm:mt-12 sm:grid-cols-3">
             {engagement.map((step, i) => (
               <Reveal
                 key={step.value}
                 delay={i * 0.06}
-                className="flex flex-col bg-sand p-8"
+                className="flex flex-col bg-sand p-6"
               >
                 <NumberedMarker value={step.value} />
                 <h3 className="mt-5 text-xl tracking-tight sm:text-2xl">
@@ -115,7 +115,7 @@ export default function ServicesPage() {
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <Eyebrow>Selected work</Eyebrow>
-                <h2 className="mt-5 max-w-2xl text-4xl sm:text-5xl">
+                <h2 className="mt-4 max-w-2xl text-3xl sm:text-4xl">
                   Outcomes, measured — not features, listed.
                 </h2>
               </div>

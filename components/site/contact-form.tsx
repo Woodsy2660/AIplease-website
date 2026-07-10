@@ -88,7 +88,7 @@ export function ContactForm({
 
   if (status === "success") {
     return (
-      <div className="rounded-2xl border border-border bg-sand p-8 sm:p-10">
+      <div className="rounded-xl border border-border bg-sand p-6 sm:p-7">
         <span
           aria-hidden
           className="inline-flex size-11 items-center justify-center rounded-full bg-accent text-on-accent"

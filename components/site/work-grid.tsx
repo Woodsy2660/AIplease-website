@@ -12,7 +12,7 @@ export function CaseStudiesGrid({ items }: { items: CaseStudy[] }) {
       {items.map((c, i) => (
         <Reveal key={c.slug} delay={i * 0.05} className="h-full">
           <Link href={`/work/${c.slug}`} className="group block h-full">
-            <Card interactive className="flex h-full flex-col p-6 sm:p-7">
+            <Card interactive className="flex h-full flex-col p-5 sm:p-6">
               <div className="flex items-center justify-between gap-3">
                 <span className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted">
                   {c.industry}
@@ -21,11 +21,11 @@ export function CaseStudiesGrid({ items }: { items: CaseStudy[] }) {
                   Sample
                 </span>
               </div>
-              <div className="mt-8 font-display text-5xl font-semibold tracking-tight tabular-nums text-ink">
+              <div className="mt-6 font-display text-4xl font-semibold tracking-tight tabular-nums text-ink">
                 <CountUp value={c.metric} />
               </div>
               <div className="mt-1 text-sm text-muted">{c.metricLabel}</div>
-              <h3 className="mt-6 text-xl tracking-tight">{c.title}</h3>
+              <h3 className="mt-5 text-lg tracking-tight">{c.title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-ink-soft">
                 {c.summary}
               </p>

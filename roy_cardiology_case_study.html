@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: Roy Cardiology | INTELECOR</title>
+<meta name="description" content="How a single-specialist cardiology practice in Sydney turned its practice management data into a weekly operational rhythm.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A2B4A;
+    --navy-deep: #0F1B36;
+    --navy-soft: #4A5A7A;
+    --navy-pale: #EEF1F6;
+    --bg: #F5F6F8;
+    --white: #FFFFFF;
+    --amber: #D97706;
+    --green: #059669;
+    --red: #DC2626;
+    --line: #DDE3EC;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--navy-deep);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--navy); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Top bar ---------- */
+  header.site {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  header.site .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .wordmark {
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    font-size: 14px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--navy-soft);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--navy-deep);
+    color: var(--navy-pale);
+    overflow: hidden;
+  }
+  .hero .wrap {
+    padding-top: 88px;
+    padding-bottom: 0;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(34px, 5.2vw, 58px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    max-width: 17.5em;
+    color: var(--white);
+  }
+  .hero p.standfirst {
+    margin-top: 26px;
+    max-width: 620px;
+    font-size: 18px;
+    color: #B9C3D6;
+  }
+  /* The ECG trace is the signature element. It runs once on load and
+     rests as a flat line, echoing the product's own rhythm framing. */
+  .trace {
+    display: block;
+    width: 100%;
+    height: 120px;
+    margin-top: 56px;
+  }
+  .trace path.beat {
+    fill: none;
+    stroke: #6E82AB;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .trace circle.pulse {
+    fill: var(--amber);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .trace path.beat {
+      stroke-dasharray: 2400;
+      stroke-dashoffset: 2400;
+      animation: draw 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+    .trace circle.pulse {
+      opacity: 0;
+      animation: pulse-in 0.6s ease 2.6s forwards;
+    }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes pulse-in { to { opacity: 1; } }
+  }
+
+  /* ---------- At a glance ---------- */
+  .glance {
+    background: var(--navy);
+    color: var(--navy-pale);
+  }
+  .glance .wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .glance .cell {
+    padding: 26px 22px 26px 0;
+    border-top: 1px solid rgba(238, 241, 246, 0.14);
+  }
+  .glance .cell + .cell { padding-left: 22px; }
+  .glance dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8B9AB8;
+    margin-bottom: 6px;
+  }
+  .glance dd { font-size: 15px; line-height: 1.5; }
+
+  /* ---------- Article body ---------- */
+  article { padding: 40px 0 0; }
+  section.block {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 640px);
+    gap: 48px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  section.block:last-of-type { border-bottom: none; }
+  .block .marker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+    padding-top: 10px;
+  }
+  .block .marker .num {
+    display: block;
+    font-size: 26px;
+    letter-spacing: 0;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .block h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.25;
+    color: var(--navy-deep);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .block p { margin-bottom: 18px; color: #2A3854; }
+  .block p:last-child { margin-bottom: 0; }
+  .block p strong { color: var(--navy-deep); font-weight: 600; }
+
+  /* ---------- Feature strip ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .feature {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .feature h3 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .feature p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+    margin: 0;
+  }
+
+  /* ---------- Timeline ---------- */
+  .phases { margin-top: 26px; }
+  .phase {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .phase:first-child { border-top: none; padding-top: 4px; }
+  .phase .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--navy);
+    margin-top: 7px;
+    justify-self: center;
+  }
+  .phase.current .dot {
+    background: var(--amber);
+    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.15);
+  }
+  .phase h3 {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+  .phase h3 .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-left: 10px;
+  }
+  .phase p {
+    font-size: 14.5px;
+    color: var(--navy-soft);
+    margin: 4px 0 0;
+  }
+
+  /* ---------- Status table ---------- */
+  .status-list { margin-top: 26px; }
+  .status-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .badge.live { background: rgba(5, 150, 105, 0.1); color: var(--green); }
+  .badge.build { background: rgba(217, 119, 6, 0.12); color: var(--amber); }
+  .badge.road { background: var(--navy-pale); color: var(--navy-soft); }
+  .status-row p { font-size: 15px; color: #2A3854; margin: 0; }
+
+  /* ---------- Pull quote ---------- */
+  .quote {
+    background: var(--navy-pale);
+    border-radius: 12px;
+    padding: 44px 48px;
+    margin: 64px 0;
+  }
+  .quote blockquote {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--navy);
+    max-width: 640px;
+  }
+  .quote cite {
+    display: block;
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    color: var(--navy-soft);
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    background: var(--navy-deep);
+    color: #8B9AB8;
+    margin-top: 72px;
+  }
+  footer.site .wrap {
+    padding-top: 44px;
+    padding-bottom: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  footer.site .fine {
+    font-size: 13px;
+    max-width: 520px;
+  }
+  footer.site .wordmark { color: var(--navy-pale); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    section.block { grid-template-columns: 1fr; gap: 14px; padding: 44px 0; }
+    .block .marker { padding-top: 0; }
+    .block .marker .num { display: inline; margin-right: 8px; }
+    .features { grid-template-columns: 1fr; }
+    .quote { padding: 32px 26px; }
+    .quote blockquote { font-size: 20px; }
+    .status-row { grid-template-columns: 1fr; gap: 8px; }
+    .hero .wrap { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">INTELECOR</a>
+    <span class="crumb">Case studies / Roy Cardiology</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Case study &middot; Roy Cardiology, Sydney</span>
+    <h1>The practice was already generating the data. What it needed was a rhythm.</h1>
+    <p class="standfirst">How a single-specialist interventional cardiology practice turned the information sitting inside its practice management software into a weekly operational cadence, without adding a single administrative step.</p>
+  </div>
+  <svg class="trace" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path class="beat" d="M0,70 L280,70 L310,70 L322,52 L334,84 L346,70 L420,70 L440,66 L456,70 L560,70 L588,70 L600,14 L614,106 L628,70 L700,70 L724,62 L740,70 L900,70 L928,70 L940,52 L952,84 L964,70 L1120,70 L1440,70"/>
+    <circle class="pulse" cx="607" cy="60" r="4"/>
+  </svg>
+</div>
+
+<div class="glance">
+  <div class="wrap">
+    <dl style="display: contents;">
+      <div class="cell"><dt>Client</dt><dd>Roy Cardiology, Sydney NSW</dd></div>
+      <div class="cell"><dt>Practice software</dt><dd>Gentu (Magentus)</dd></div>
+      <div class="cell"><dt>Engagement</dt><dd>Design, build and integration, ongoing</dd></div>
+      <div class="cell"><dt>Hosting</dt><dd>AWS Sydney, Australian data residency</dd></div>
+      <div class="cell"><dt>Stack</dt><dd>React, FastAPI, PostgreSQL</dd></div>
+    </dl>
+  </div>
+</div>
+
+<article class="wrap">
+
+  <section class="block">
+    <div class="marker"><span class="num">01</span>The practice</div>
+    <div>
+      <h2>A busy specialist practice with data in all the right places, and none of the useful ones</h2>
+      <p>Roy Cardiology is a single-specialist interventional cardiology practice led by A/Prof Andrew Roy, running consulting rooms in Sydney alongside hospital procedural sessions. Like most Australian specialist practices, it runs on Gentu, the cloud practice management platform from Magentus. Appointments, referrals, correspondence and billing all live inside it.</p>
+      <p>The information was there. Getting at it was the problem. Operational questions arrived at weekly practice meetings faster than the answers could be assembled: how many referrals came in this week and from whom, which are approaching expiry without a booking, what did non-attendance actually cost, which letters are still waiting on a signature. Each answer meant a separate manual export, a different date window, and a spreadsheet someone had to build by hand.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">02</span>The problem</div>
+    <div>
+      <h2>Practice meetings ran on recollection rather than evidence</h2>
+      <p>The weekly practice meeting is where a specialist practice actually gets managed. Scheduling gaps, referral follow-ups, outstanding accounts and correspondence backlogs all surface there. But without a shared, current picture of the practice, those meetings leaned on memory and instinct, and the same questions kept resurfacing week after week.</p>
+      <p>The brief was not another dashboard. Dashboards answer questions only when someone remembers to ask them. The brief was infrastructure that matches the way the practice already works: something that observes the practice continuously and arrives at the meeting already prepared.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">03</span>The approach</div>
+    <div>
+      <h2>Prototype against real exports, design against a synthetic practice</h2>
+      <p>The build started with the practice's own de-identified Gentu exports: invoice reports, item-level reports, banking reports, appointment lists and unresolved invoice ageing. Working from real report structures rather than idealised sample data surfaced the quirks early, including item columns that mix Medicare item numbers with internal billing labels, and exports whose date windows do not line up with one another. The data model was built to reconcile these sources against each other, with hard invariants confirmed against the source files.</p>
+      <p>Design ran in parallel using a fully synthetic practice, so no patient or practice data ever appeared in a design artefact. Three complete visual directions were built with identical data and compared side by side before one was selected and refined into the production interface: a calm, card-based system that presents each metric with its own date context rather than implying a single unified snapshot.</p>
+      <p>One editorial principle runs through every screen: <strong>observation, not judgement</strong>. The product notes what is worth noticing and offers options. It never tells a clinician or practice manager what they must do.</p>
+      <div class="phases">
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Discovery with real Gentu exports</h3><p>Report structures mapped, reconciliation invariants confirmed, de-identification boundary defined.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Data model and adapter layer</h3><p>Each Gentu data source parsed into a common internal model, with patient identifiers stripped at the boundary.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Design exploration</h3><p>Three visual directions built with consistent synthetic data, one selected and refined.</p></div>
+        </div>
+        <div class="phase current">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Production build and integration <span class="tag">In progress</span></h3><p>Core surfaces implemented in the live codebase, with integration to the Gentu partner API ahead.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">04</span>What was built</div>
+    <div>
+      <h2>Practice Insights: a rhythm layer, not a reporting tool</h2>
+      <p>The centrepiece is Practice Insights, which turns continuous observation of the practice into structured documents timed to the practice's own cadence. Instead of asking anyone to go looking for answers, the answers arrive when the practice needs them: before the weekly meeting, at the end of the month, and immediately when something is time-sensitive.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>Overview</h3>
+          <p>A current picture of the practice across appointments, referrals, correspondence and accounts, with every figure presented alongside its own date context.</p>
+        </div>
+        <div class="feature">
+          <h3>Action items</h3>
+          <p>Things worth noticing, gathered in one place: referrals approaching expiry without a booking, letters awaiting signature, invoices ageing past their usual pattern.</p>
+        </div>
+        <div class="feature">
+          <h3>Weekly and monthly reports</h3>
+          <p>Structured documents generated on demand as downloadable exports, ready to anchor the practice meeting rather than replace it.</p>
+        </div>
+        <div class="feature">
+          <h3>Notifications</h3>
+          <p>A weekly update email, a briefing-ready notice ahead of meetings, and an urgent action digest when something cannot wait for the next cycle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">05</span>Under the hood</div>
+    <div>
+      <h2>Privacy at the boundary, built for the Gentu ecosystem</h2>
+      <p>De-identification happens at the adapter boundary, before data reaches any analytical layer. Patient names, contact details and Medicare identifiers are stripped on ingestion; everything downstream works with internal identifiers and aggregate counts only. All infrastructure runs in AWS's Sydney region, keeping data residency entirely within Australia.</p>
+      <p>Today the platform ingests the practice's own Gentu report exports. The architecture was designed from the outset for the Gentu partner API, which is built on the FHIR R4 healthcare data standard: the current ingestion layer is deliberately isolated so that the move from file exports to a direct API connection is a swap, not a rebuild.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">06</span>Where it stands</div>
+    <div>
+      <h2>An honest roadmap, in the product and on this page</h2>
+      <p>The same candour that shapes the product's coming-soon pages applies here. This is what is running, what is being built, and what is planned.</p>
+      <div class="status-list">
+        <div class="status-row">
+          <span><span class="badge live">Delivered</span></span>
+          <p>Data model and reconciliation across Gentu financial and appointment exports, de-identification adapter, approved visual system, simulated onboarding experience.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge build">In build</span></span>
+          <p>Production implementation of the Overview and Action Items surfaces, report generation, and the notification pipeline.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge road">Planned</span></span>
+          <p>Direct Gentu partner API integration, followed by Financial Intelligence and Correspondence surfaces as the underlying data access matures.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote below is placeholder copy. To confirm with Andrew before publishing. -->
+  <div class="quote">
+    <blockquote>&ldquo;Placeholder pull quote from A/Prof Andrew Roy about arriving at the practice meeting with the week already summarised. To confirm before this page goes live.&rdquo;</blockquote>
+    <cite>A/Prof Andrew Roy &middot; Roy Cardiology</cite>
+  </div>
+
+</article>
+
+<footer class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">INTELECOR</a>
+    <p class="fine">Practice operations infrastructure for Australian specialist cardiology. Built for the Gentu ecosystem, hosted in Australia, designed around the way a practice actually runs.</p>
+  </div>
+</footer>
+
+</body>
+</html>

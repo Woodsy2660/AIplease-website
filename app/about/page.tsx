@@ -29,17 +29,17 @@ export default function AboutPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border grain-rules">
-        <Container className="py-16 sm:py-24 lg:py-28">
+        <Container className="py-12 sm:py-16 lg:py-20">
           <Reveal>
             <Eyebrow>About</Eyebrow>
           </Reveal>
           <Reveal delay={0.06}>
-            <h1 className="mt-6 max-w-4xl text-[2.7rem] font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-4xl text-[2.25rem] font-semibold leading-[1.02] tracking-tight sm:text-4xl lg:text-[2.75rem] xl:text-5xl">
               Practical, not performative.
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
-            <p className="mt-7 max-w-2xl text-xl text-ink-soft sm:text-2xl">
+            <p className="mt-5 max-w-2xl text-lg text-ink-soft sm:text-xl">
               {about.whoWeAre}
             </p>
           </Reveal>
@@ -56,7 +56,7 @@ export default function AboutPage() {
         <Container>
           <Reveal>
             <Eyebrow>Background</Eyebrow>
-            <h2 className="mt-5 max-w-3xl text-4xl sm:text-5xl">
+            <h2 className="mt-4 max-w-3xl text-3xl sm:text-4xl">
               From the field and the lab to the way we build.
             </h2>
             <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
@@ -64,12 +64,12 @@ export default function AboutPage() {
               one where strategy meets evidence.
             </p>
           </Reveal>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border sm:grid-cols-2">
+          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border sm:grid-cols-2">
             {about.background.map((item, i) => (
               <Reveal
                 key={item.label}
                 delay={i * 0.06}
-                className="flex flex-col bg-sand p-8 sm:p-10"
+                className="flex flex-col bg-sand p-6 sm:p-7"
               >
                 <NumberedMarker value={`0${i + 1}`} />
                 <h3 className="mt-5 text-xl tracking-tight">{item.label}</h3>
@@ -85,16 +85,16 @@ export default function AboutPage() {
         <Container>
           <Reveal>
             <Eyebrow>How we work</Eyebrow>
-            <h2 className="mt-5 max-w-3xl text-4xl sm:text-5xl">
+            <h2 className="mt-4 max-w-3xl text-3xl sm:text-4xl">
               From open-ended brief to a result you can use.
             </h2>
           </Reveal>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-2xl border border-border sm:grid-cols-3">
+          <div className="mt-10 grid gap-px overflow-hidden rounded-xl border border-border sm:grid-cols-3">
             {about.principles.map((principle, i) => (
               <Reveal
                 key={principle.title}
                 delay={i * 0.06}
-                className="flex flex-col bg-canvas p-8 sm:p-10"
+                className="flex flex-col bg-canvas p-6 sm:p-7"
               >
                 <NumberedMarker value={`0${i + 1}`} />
                 <h3 className="mt-5 text-xl tracking-tight">
@@ -114,7 +114,7 @@ export default function AboutPage() {
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <Eyebrow>Team</Eyebrow>
-                <h2 className="mt-5 max-w-2xl text-4xl sm:text-5xl">
+                <h2 className="mt-4 max-w-2xl text-3xl sm:text-4xl">
                   Small team, end-to-end accountability.
                 </h2>
               </div>

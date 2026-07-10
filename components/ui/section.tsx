@@ -26,7 +26,7 @@ export function Section({
     <section
       className={cn(
         tones[tone],
-        compact ? "py-16 sm:py-20" : "py-20 sm:py-28 lg:py-32",
+        compact ? "py-10 sm:py-14" : "py-14 sm:py-16 lg:py-20 xl:py-24",
         bordered && "border-t border-border",
         className,
       )}

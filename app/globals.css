@@ -1,24 +1,37 @@
 @import "tailwindcss";
 
 /* ------------------------------------------------------------------ *
- * AI Please — "Refined Stone" design system
- * Warm off-white canvas, near-black ink, restrained burnt-sienna accent.
+ * AI Please — official brand kit (design-system/MASTER.md)
+ * Chocolate / Stone / Rock / Vermilion / Sky — anti-theatre, restrained.
  * ------------------------------------------------------------------ */
 
 :root {
-  --canvas: #faf9f7; /* warm off-white — page background */
-  --sand: #f2eee7; /* alternating section panel */
-  --sand-deep: #eae3d8; /* deeper stone for cards / emphasis blocks */
-  --ink: #1c1a17; /* near-black warm — headings & primary text */
-  --ink-soft: #4a453e; /* secondary text */
-  --muted: #6f675b; /* captions, labels, eyebrows */
-  --border: #e4ded4; /* hairline rules & dividers */
-  --accent: #c2410c; /* burnt sienna — CTAs, markers, emphasis */
-  --accent-strong: #9a3412; /* accent hover / pressed */
-  --on-accent: #fff8f3; /* text on accent surfaces */
+  /* ------------------------------------------------------------------ *
+   * Semantic aliases (site-wide)
+   * ------------------------------------------------------------------ */
+  --canvas: #e5e2dd; /* stone — page background */
+  --sand: #eef4f6; /* sky-tinted panel */
+  --sand-deep: #beb8aa; /* rock — deeper panels */
+  --ink: #291f16; /* chocolate — headings & primary text */
+  --ink-soft: #4a3f35; /* secondary text */
+  --muted: #7a7268; /* captions, labels (rock-shifted) */
+  --border: #d4cfc6; /* hairline rules */
+  --accent: #291f16; /* chocolate — primary actions */
+  --accent-strong: #1a1410; /* pressed */
+  --on-accent: #ffffff; /* text on accent surfaces */
+
+  /* ------------------------------------------------------------------ *
+   * Brand tokens (canonical names)
+   * ------------------------------------------------------------------ */
+  --chocolate: #291f16;
+  --stone: #e5e2dd;
+  --rock: #beb8aa;
+  --vermilion: #fe4939;
+  --sky: #c7e3ee;
 }
 
 @theme inline {
+  /* Refined Stone colors */
   --color-canvas: var(--canvas);
   --color-sand: var(--sand);
   --color-sand-deep: var(--sand-deep);
@@ -30,13 +43,20 @@
   --color-accent-strong: var(--accent-strong);
   --color-on-accent: var(--on-accent);
 
+  /* Brand colors */
+  --color-chocolate: var(--chocolate);
+  --color-stone: var(--stone);
+  --color-rock: var(--rock);
+  --color-vermilion: var(--vermilion);
+  --color-sky: var(--sky);
+
+  /* TODO: swap in SFT Schrifted Sans when font files are available */
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-plex), ui-monospace, SFMono-Regular, monospace;
 }
 
 @layer base {
-  /* Tailwind v4 defaults borders to currentColor; pin to our stone hairline. */
   *,
   *::before,
   *::after {
@@ -45,7 +65,7 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 6rem; /* clears the sticky navbar on anchor jumps */
+    scroll-padding-top: 3.5rem;
     -webkit-text-size-adjust: 100%;
   }
 
@@ -84,7 +104,6 @@
   }
 }
 
-/* A thin top-to-bottom "scan line" texture used sparingly on hero/CTA bands. */
 @utility grain-rules {
   background-image: repeating-linear-gradient(
     to right,
@@ -99,6 +118,62 @@
   }
   to {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes magic-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap)));
+  }
+}
+
+@keyframes magic-marquee-vertical {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(calc(-100% - var(--gap)));
+  }
+}
+
+@utility animate-magic-marquee {
+  animation: magic-marquee var(--duration) linear infinite;
+}
+
+@utility animate-magic-marquee-vertical {
+  animation: magic-marquee-vertical var(--duration) linear infinite;
+}
+
+@keyframes ecg-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ecg-pulse {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slalom-carve {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes slalom-buoy {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes data-node {
+  to {
+    opacity: 1;
   }
 }
 

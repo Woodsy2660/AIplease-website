@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.*
+
+# Next.js
+.next/
+out/
+build/
+
+# Production / local env
+.env
+.env*.local
+.vercel
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Testing
+coverage/
+playwright-report/
+test-results/
+
+# OS
+.DS_Store
+Thumbs.db
+*.pem
+
+# Editor / agent tooling (not needed in deploy)
+.claude/
+.grok/
+terminals/
+mcps/
+
+# Local design references (production assets are under public/)
+Example Team Photos/
+Sound familiar_ section design/
+Sound Familiar Section (standalone).html
+*_case_study.html
+AiPlease_BrandGuidelines_v2.pdf

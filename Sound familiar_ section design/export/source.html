@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="../support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#E5E2DD">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#E5E2DD"></rect>
+    <text x="600" y="430" text-anchor="middle" font-family="Georgia, serif" font-size="340" fill="#FE4939">&#8220;&#8221;</text>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E5E2DD; }
+  a { color: #291F16; }
+  a:hover { color: #FE4939; }
+
+  @keyframes sf-slide {
+    0%    { opacity: 0; filter: blur(10px); transform: translateY(16px); }
+    1.6%  { opacity: 1; filter: blur(0px);  transform: translateY(0px); }
+    7.5%  { opacity: 1; filter: blur(0px);  transform: translateY(0px); }
+    9.09% { opacity: 0; filter: blur(10px); transform: translateY(-16px); }
+    100%  { opacity: 0; filter: blur(10px); transform: translateY(-16px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sf-slide] { animation: none !important; }
+    [data-sf-slide="show"] { opacity: 1 !important; filter: none !important; transform: none !important; }
+  }
+</style>
+</helmet>
+<section data-screen-label="Sound familiar section" style="position: relative; width: 100%; min-height: 540px; height: 78vh; max-height: 760px; background: #E5E2DD; overflow: hidden; font-family: 'Inter', 'Helvetica Neue', sans-serif;">
+
+  <h2 style="position: absolute; top: 13%; left: 50%; transform: translateX(-50%); margin: 0; color: #FE4939; font-size: clamp(15px, 1.15vw, 18px); font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; z-index: 2;">Sound familiar?</h2>
+
+  <sc-for list="{{ slides }}" as="s" hint-placeholder-count="1">
+    <div data-sf-slide="{{ s.staticVis }}" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 36px; padding: 0 7vw; opacity: 0; will-change: opacity, filter, transform; animation: {{ s.anim }};">
+      <p style="margin: 0; max-width: 920px; font-size: clamp(26px, 3.4vw, 46px); font-weight: 500; line-height: 1.28; letter-spacing: -0.015em; color: #291F16; text-align: center; text-wrap: balance;">&ldquo;{{ s.text }}&rdquo;</p>
+      <p style="margin: 0; font-size: 13px; font-weight: 500; letter-spacing: 0.22em; color: #BEB8AA; font-variant-numeric: tabular-nums;">{{ s.counter }}</p>
+    </div>
+  </sc-for>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 700 },
+  &quot;secondsPerQuote&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 4.2, &quot;min&quot;: 2.5, &quot;max&quot;: 8, &quot;step&quot;: 0.5, &quot;unit&quot;: &quot;s&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot; },
+  &quot;speed&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.5, &quot;max&quot;: 2, &quot;step&quot;: 0.25, &quot;unit&quot;: &quot;\u00d7&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot; }
+}">
+class Component extends DCLogic {
+  renderVals() {
+    const speed = this.props.speed ?? 1;
+    const per = (this.props.secondsPerQuote ?? 4.2) * speed;
+
+    const texts = [
+      "We're paying for AI tools nobody actually uses.",
+      'Everyone says we need AI. Nobody says what to do with it.',
+      'Our systems are too fragile and old.',
+      'What about training our team?',
+      "I know we're losing hours somewhere \u2014 I just can't see where.",
+      'Is my client data safe if we use this?',
+      'The last agency built it and vanished.',
+      "I don't want to spend money on something that's obsolete next year.",
+      'We built something last year and it already feels old.',
+      "I don't want to change how we work to suit some software.",
+      'Just tell me straight \u2014 do we even need this?',
+    ];
+
+    const total = (per * texts.length).toFixed(2);
+    const pad = n => String(n).padStart(2, '0');
+
+    const slides = texts.map((t, i) => ({
+      text: t,
+      counter: pad(i + 1) + ' / ' + pad(texts.length),
+      staticVis: i === 0 ? 'show' : 'hide',
+      anim: 'sf-slide ' + total + 's ease-in-out ' + (i * per).toFixed(2) + 's infinite both',
+    }));
+
+    return { slides };
+  }
+}
+</script>
+</body>
+</html>

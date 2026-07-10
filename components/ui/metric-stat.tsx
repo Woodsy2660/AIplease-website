@@ -14,7 +14,7 @@ export function MetricStat({ value, label, className, inverted }: MetricStatProp
     <div className={className}>
       <div
         className={cn(
-          "font-display text-4xl font-semibold tracking-tight tabular-nums sm:text-5xl",
+          "font-display text-3xl font-semibold tracking-tight tabular-nums sm:text-4xl",
           inverted ? "text-canvas" : "text-ink",
         )}
       >

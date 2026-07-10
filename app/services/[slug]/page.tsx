@@ -42,7 +42,7 @@ export default async function Page({
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border grain-rules">
-        <Container className="py-16 sm:py-24 lg:py-28">
+        <Container className="py-12 sm:py-16 lg:py-20">
           <Reveal>
             <Link
               href="/services"
@@ -52,13 +52,13 @@ export default async function Page({
               All services
             </Link>
           </Reveal>
-          <div className="mt-10 grid gap-12 lg:grid-cols-[1.55fr_1fr] lg:items-end lg:gap-16">
+          <div className="mt-8 grid gap-8 lg:grid-cols-[1.55fr_1fr] lg:items-end lg:gap-10">
             <div>
               <Reveal>
                 <Eyebrow index={pillar.number}>{pillar.name}</Eyebrow>
               </Reveal>
               <Reveal delay={0.06}>
-                <h1 className="mt-6 max-w-3xl text-[2.4rem] font-semibold leading-[1.04] tracking-tight sm:text-5xl lg:text-6xl">
+                <h1 className="mt-5 max-w-3xl text-[2.1rem] font-semibold leading-[1.04] tracking-tight sm:text-4xl lg:text-[2.75rem]">
                   {pillar.headline}
                 </h1>
               </Reveal>
@@ -69,7 +69,7 @@ export default async function Page({
               </Reveal>
               <Reveal delay={0.18}>
                 <div className="mt-9 flex flex-wrap gap-3">
-                  <Button href="/contact" size="lg">
+                  <Button href="/contact">
                     Let&apos;s Talk
                     <ArrowRight className="size-4" />
                   </Button>
@@ -79,11 +79,11 @@ export default async function Page({
 
             {/* Tagline panel — quiet echo of the home hero spec sheet */}
             <Reveal delay={0.24} className="lg:pb-1">
-              <div className="rounded-2xl border border-border bg-canvas/60 p-6 backdrop-blur-sm sm:p-8">
+              <div className="rounded-xl border border-border bg-canvas/60 p-5 backdrop-blur-sm sm:p-6">
                 <span className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted">
                   In short
                 </span>
-                <p className="mt-4 text-balance text-xl leading-snug tracking-tight text-ink">
+                <p className="mt-3 text-balance text-lg leading-snug tracking-tight text-ink">
                   {pillar.tagline}
                 </p>
               </div>
@@ -133,7 +133,7 @@ export default async function Page({
               <Reveal
                 key={step.step}
                 delay={i * 0.06}
-                className="flex flex-col bg-sand p-8"
+                className="flex flex-col bg-sand p-6"
               >
                 <NumberedMarker value={step.step} />
                 <h3 className="mt-5 text-xl tracking-tight">{step.title}</h3>
@@ -187,7 +187,7 @@ export default async function Page({
               <Reveal key={p.slug} delay={i * 0.06} className="h-full">
                 <Link
                   href={`/services/${p.slug}`}
-                  className="group flex h-full flex-col bg-ink p-8 transition-colors hover:bg-canvas/5 sm:p-10"
+                  className="group flex h-full flex-col bg-ink p-6 transition-colors hover:bg-canvas/5 sm:p-7"
                 >
                   <NumberedMarker value={p.number} inverted />
                   <h3 className="mt-5 text-2xl tracking-tight text-canvas">

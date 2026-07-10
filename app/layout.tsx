@@ -5,7 +5,7 @@ import {
   IBM_Plex_Mono,
 } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/site/navbar";
+import { SiteHeader } from "@/components/site/site-header";
 import { Footer } from "@/components/site/footer";
 import { MotionProvider } from "@/components/motion-provider";
 
@@ -76,7 +76,7 @@ export default function RootLayout({
           Skip to content
         </a>
         <MotionProvider>
-          <Navbar />
+          <SiteHeader />
           <main id="main" className="flex-1">
             {children}
           </main>

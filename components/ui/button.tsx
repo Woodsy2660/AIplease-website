@@ -15,7 +15,7 @@ const variants = {
 const sizes = {
   sm: "h-9 px-4 text-sm",
   md: "h-11 px-5 text-[0.95rem]",
-  lg: "h-[3.25rem] px-7 text-base",
+  lg: "h-11 px-6 text-sm",
 } as const;
 
 type CommonProps = {

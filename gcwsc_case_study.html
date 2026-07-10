@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study: Gold Coast Waterski Club | INTELECOR</title>
+<meta name="description" content="How a one-boat waterski club on the Gold Coast replaced its legacy booking system with a platform that knows the club's rules as well as its members do.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1A2B4A;
+    --navy-deep: #0F1B36;
+    --navy-soft: #4A5A7A;
+    --navy-pale: #EEF1F6;
+    --bg: #F5F6F8;
+    --white: #FFFFFF;
+    --amber: #D97706;
+    --green: #059669;
+    --red: #DC2626;
+    --line: #DDE3EC;
+    --serif: "Newsreader", Georgia, serif;
+    --sans: "Inter", -apple-system, sans-serif;
+    --mono: "IBM Plex Mono", ui-monospace, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--navy-deep);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: var(--navy); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--amber);
+    outline-offset: 3px;
+  }
+
+  .wrap {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ---------- Top bar ---------- */
+  header.site {
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+  header.site .wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-top: 22px;
+    padding-bottom: 22px;
+  }
+  .wordmark {
+    font-family: var(--mono);
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    font-size: 14px;
+    color: var(--navy);
+    text-decoration: none;
+  }
+  .crumb {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--navy-soft);
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    background: var(--navy-deep);
+    color: var(--navy-pale);
+    overflow: hidden;
+  }
+  .hero .wrap {
+    padding-top: 88px;
+    padding-bottom: 0;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--amber);
+    display: block;
+    margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(34px, 5.2vw, 58px);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    max-width: 17.5em;
+    color: var(--white);
+  }
+  .hero p.standfirst {
+    margin-top: 26px;
+    max-width: 620px;
+    font-size: 18px;
+    color: #B9C3D6;
+  }
+  /* The slalom course is the signature element. A single wake carves
+     through six buoys and settles, echoing a run down the course. */
+  .course {
+    display: block;
+    width: 100%;
+    height: 120px;
+    margin-top: 56px;
+  }
+  .course path.wake {
+    fill: none;
+    stroke: #6E82AB;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+  .course circle.buoy {
+    fill: var(--amber);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .course path.wake {
+      stroke-dasharray: 2400;
+      stroke-dashoffset: 2400;
+      animation: carve 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+    }
+    .course circle.buoy {
+      opacity: 0;
+      animation: buoy-in 0.5s ease forwards;
+    }
+    .course circle.buoy:nth-of-type(1) { animation-delay: 0.7s; }
+    .course circle.buoy:nth-of-type(2) { animation-delay: 1.05s; }
+    .course circle.buoy:nth-of-type(3) { animation-delay: 1.4s; }
+    .course circle.buoy:nth-of-type(4) { animation-delay: 1.75s; }
+    .course circle.buoy:nth-of-type(5) { animation-delay: 2.1s; }
+    .course circle.buoy:nth-of-type(6) { animation-delay: 2.45s; }
+    @keyframes carve { to { stroke-dashoffset: 0; } }
+    @keyframes buoy-in { to { opacity: 1; } }
+  }
+
+  /* ---------- At a glance ---------- */
+  .glance {
+    background: var(--navy);
+    color: var(--navy-pale);
+  }
+  .glance .wrap {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .glance .cell {
+    padding: 26px 22px 26px 0;
+    border-top: 1px solid rgba(238, 241, 246, 0.14);
+  }
+  .glance .cell + .cell { padding-left: 22px; }
+  .glance dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8B9AB8;
+    margin-bottom: 6px;
+  }
+  .glance dd { font-size: 15px; line-height: 1.5; }
+
+  /* ---------- Article body ---------- */
+  article { padding: 40px 0 0; }
+  section.block {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 640px);
+    gap: 48px;
+    padding: 56px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  section.block:last-of-type { border-bottom: none; }
+  .block .marker {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--navy-soft);
+    padding-top: 10px;
+  }
+  .block .marker .num {
+    display: block;
+    font-size: 26px;
+    letter-spacing: 0;
+    color: var(--navy);
+    margin-bottom: 4px;
+  }
+  .block h2 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1.25;
+    color: var(--navy-deep);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  .block p { margin-bottom: 18px; color: #2A3854; }
+  .block p:last-child { margin-bottom: 0; }
+  .block p strong { color: var(--navy-deep); font-weight: 600; }
+
+  /* ---------- Feature strip ---------- */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 28px;
+  }
+  .feature {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 20px 22px;
+  }
+  .feature h3 {
+    font-family: var(--sans);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 6px;
+  }
+  .feature p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--navy-soft);
+    margin: 0;
+  }
+
+  /* ---------- Timeline ---------- */
+  .phases { margin-top: 26px; }
+  .phase {
+    display: grid;
+    grid-template-columns: 34px 1fr;
+    gap: 18px;
+    padding: 18px 0;
+    border-top: 1px solid var(--line);
+  }
+  .phase:first-child { border-top: none; padding-top: 4px; }
+  .phase .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--navy);
+    margin-top: 7px;
+    justify-self: center;
+  }
+  .phase.current .dot {
+    background: var(--amber);
+    box-shadow: 0 0 0 4px rgba(217, 119, 6, 0.15);
+  }
+  .phase h3 {
+    font-size: 15.5px;
+    font-weight: 600;
+    color: var(--navy-deep);
+  }
+  .phase h3 .tag {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-left: 10px;
+  }
+  .phase p {
+    font-size: 14.5px;
+    color: var(--navy-soft);
+    margin: 4px 0 0;
+  }
+
+  /* ---------- Status table ---------- */
+  .status-list { margin-top: 26px; }
+  .status-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 20px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+    align-items: start;
+  }
+  .badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 999px;
+    display: inline-block;
+    margin-top: 3px;
+  }
+  .badge.live { background: rgba(5, 150, 105, 0.1); color: var(--green); }
+  .badge.build { background: rgba(217, 119, 6, 0.12); color: var(--amber); }
+  .badge.road { background: var(--navy-pale); color: var(--navy-soft); }
+  .status-row p { font-size: 15px; color: #2A3854; margin: 0; }
+
+  /* ---------- Pull quote ---------- */
+  .quote {
+    background: var(--navy-pale);
+    border-radius: 12px;
+    padding: 44px 48px;
+    margin: 64px 0;
+  }
+  .quote blockquote {
+    font-family: var(--serif);
+    font-size: 24px;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--navy);
+    max-width: 640px;
+  }
+  .quote cite {
+    display: block;
+    margin-top: 18px;
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 12.5px;
+    letter-spacing: 0.08em;
+    color: var(--navy-soft);
+  }
+
+  /* ---------- Footer ---------- */
+  footer.site {
+    background: var(--navy-deep);
+    color: #8B9AB8;
+    margin-top: 72px;
+  }
+  footer.site .wrap {
+    padding-top: 44px;
+    padding-bottom: 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  footer.site .fine {
+    font-size: 13px;
+    max-width: 520px;
+  }
+  footer.site .wordmark { color: var(--navy-pale); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 820px) {
+    section.block { grid-template-columns: 1fr; gap: 14px; padding: 44px 0; }
+    .block .marker { padding-top: 0; }
+    .block .marker .num { display: inline; margin-right: 8px; }
+    .features { grid-template-columns: 1fr; }
+    .quote { padding: 32px 26px; }
+    .quote blockquote { font-size: 20px; }
+    .status-row { grid-template-columns: 1fr; gap: 8px; }
+    .hero .wrap { padding-top: 64px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">INTELECOR</a>
+    <span class="crumb">Case studies / Gold Coast Waterski Club</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Case study &middot; Gold Coast Waterski Club, QLD</span>
+    <h1>One boat, sixty members, and a rulebook that finally lives in the software.</h1>
+    <p class="standfirst">How a member-run waterski club on the Gold Coast replaced its ageing booking system with a platform that enforces the club's own booking rules, tracks every set and guest fee, and closes out each ski day with the boat's numbers on record.</p>
+  </div>
+  <svg class="course" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true">
+    <path class="wake" d="M0,60 C60,60 100,60 150,60 C210,60 230,22 290,22 C350,22 370,98 430,98 C490,98 510,22 570,22 C630,22 650,98 710,98 C770,98 790,22 850,22 C910,22 930,98 990,98 C1050,98 1070,60 1130,60 C1230,60 1330,60 1440,60"/>
+    <circle class="buoy" cx="290" cy="38" r="4"/>
+    <circle class="buoy" cx="430" cy="82" r="4"/>
+    <circle class="buoy" cx="570" cy="38" r="4"/>
+    <circle class="buoy" cx="710" cy="82" r="4"/>
+    <circle class="buoy" cx="850" cy="38" r="4"/>
+    <circle class="buoy" cx="990" cy="82" r="4"/>
+  </svg>
+</div>
+
+<div class="glance">
+  <div class="wrap">
+    <dl style="display: contents;">
+      <div class="cell"><dt>Client</dt><dd>Gold Coast Waterski Club, QLD</dd></div>
+      <div class="cell"><dt>Engagement</dt><dd>Design, build and launch, with ongoing maintenance</dd></div>
+      <div class="cell"><dt>Payments</dt><dd>Square, card on file</dd></div>
+      <div class="cell"><dt>Stack</dt><dd>Next.js, Supabase, Vercel</dd></div>
+      <div class="cell"><dt>Status</dt><dd>Live in production, club-wide</dd></div>
+    </dl>
+  </div>
+</div>
+
+<article class="wrap">
+
+  <section class="block">
+    <div class="marker"><span class="num">01</span>The club</div>
+    <div>
+      <h2>A one-boat club where every two-hour slot has to be shared fairly</h2>
+      <p>Gold Coast Waterski Club is a member-run club of around sixty skiers sharing a single tow boat across fixed two-hour slots from 7am to 7pm. Every booking on the calendar is the boat: there is no second vessel to absorb a clash, and every person on board has to be named for insurance, whether they ski or not.</p>
+      <p>Fairness is the club's operating principle, and it is written into a genuinely intricate rulebook. Members book up to seven days ahead, can only rebook the same slot six days out, and unlock a second slot in the same week just 48 hours before it. Guests pay tiered day fees that step up after five visits a season, on top of the flat per-set fuel fee everyone pays. The rules work — when everyone follows them.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">02</span>The problem</div>
+    <div>
+      <h2>The system took the money, but the rules lived in people's heads</h2>
+      <p>The club's previous app handled the basics: a calendar and a way to pay set fees. Everything else ran on trust and memory. Nothing stopped a member from booking outside the club's own rules, so enforcement fell to the committee after the fact. Unpaid sets drifted for weeks with no lockout and no reminder. Family bookings scattered across individual accounts, so payments were missed simply because a set never appeared on the payer's own dashboard.</p>
+      <p>The boat itself had the same visibility problem. Engine hours, fuel levels and refuels were recorded inconsistently, which made it hard to spot when the numbers between one booking and the next didn't add up. The committee wasn't asking for a flashier app. It was asking for a system that knew the club's rules as well as its longest-standing members do, and applied them evenly to everyone.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">03</span>The approach</div>
+    <div>
+      <h2>Start from the rulebook, design around the ski day</h2>
+      <p>The build began with the club's own documents: the written booking rules, the fee schedule, and a structured Q&amp;A with the committee to pin down every edge case the paperwork left open — what happens with jump-set bookings, how guest visit counts reset each season, who is allowed to drive. Each answer became an explicit constraint in the data model rather than a note in a manual, so the calendar itself refuses a booking the rules would refuse.</p>
+      <p>The second design anchor was the ski day itself. A booking is not just a calendar entry: it opens on the water with a starting report of engine hours and fuel, and it closes with an end report, the sets skied, and photo proof of the boat's screen. Modelling that full lifecycle meant payments, fuel tracking and incident detection all hang off the same record, instead of living in separate spreadsheets.</p>
+      <p>One principle carried through every screen: <strong>the rules do the enforcing, not the committee</strong>. When the system applies the six-day rule or blocks a booking over an unpaid balance, it does so for everyone identically, and no volunteer has to have an awkward conversation.</p>
+      <div class="phases">
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Discovery with the committee</h3><p>Booking rules, fee tiers and ski-day workflows mapped from club documents and a structured operations Q&amp;A.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Rules engine and data model</h3><p>Booking windows, slot capacity, guest tiers and payment lockouts encoded as constraints, not conventions.</p></div>
+        </div>
+        <div class="phase">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Build, launch and migration</h3><p>Members re-registered on the new platform with committee-issued signup codes, and admins granted memberships against club records.</p></div>
+        </div>
+        <div class="phase current">
+          <span class="dot" aria-hidden="true"></span>
+          <div><h3>Live operation and refinement <span class="tag">Ongoing</span></h3><p>The platform runs the club's day-to-day bookings and payments, with features added as the committee's needs evolve.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">04</span>What was built</div>
+    <div>
+      <h2>A booking platform that runs the whole ski day, not just the calendar</h2>
+      <p>The result is a single web app that carries a booking from the moment a member picks a slot through to the boat being reported, refuelled and paid for. Anyone can open the calendar and see availability; only members can book, which lets guests plan a visit without the committee fielding calls.</p>
+      <div class="features">
+        <div class="feature">
+          <h3>Rule-aware bookings</h3>
+          <p>The calendar enforces the club's booking windows, same-slot restrictions, 48-hour bonus rule and slot capacity automatically, and names every person on the boat for insurance.</p>
+        </div>
+        <div class="feature">
+          <h3>Memberships and family accounts</h3>
+          <p>Yearly memberships tracked in-app with booking lockouts for lapsed renewals, and family groups under a single paying account so no set slips through unpaid.</p>
+        </div>
+        <div class="feature">
+          <h3>Payments with Square</h3>
+          <p>Cards saved securely with Square, per-set fees and tiered guest day fees charged against each booking, and booking privileges paused when a balance runs more than two weeks overdue.</p>
+        </div>
+        <div class="feature">
+          <h3>Boat operations and incidents</h3>
+          <p>Start and end reports with engine hours, fuel level and photo proof, refuel receipts with cost and litres, and automatic incident flags when consecutive bookings' numbers don't reconcile.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">05</span>Under the hood</div>
+    <div>
+      <h2>Card data stays with Square, club data stays consistent</h2>
+      <p>Payments run on Square's card-on-file vault, so the club never touches anything beyond the last four digits of a member's card. Charges are calculated server-side from the booking record itself — sets, guests, visit tiers — so what a member sees on their dashboard is what their card is charged, and every payment traces back to a specific booking.</p>
+      <p>The application runs on Next.js and Supabase, deployed on Vercel, with row-level security separating what members, family payers and committee admins can see and change. Because the boat's engine hours and fuel levels are captured at both ends of every booking, the system can compare consecutive reports and raise an incident automatically when the numbers drift — turning what used to be an argument into a record.</p>
+    </div>
+  </section>
+
+  <section class="block">
+    <div class="marker"><span class="num">06</span>Where it stands</div>
+    <div>
+      <h2>Live on the water, and still being refined</h2>
+      <p>The platform is in production and running the club's real bookings, payments and boat reporting. As with every engagement, the roadmap here is stated plainly: what is running, what is being built, and what is planned.</p>
+      <div class="status-list">
+        <div class="status-row">
+          <span><span class="badge live">Delivered</span></span>
+          <p>Rule-aware booking calendar with public availability view, memberships and family accounts, Square payments with tiered guest fees, boat start/end reporting, refuel history and automatic incident detection.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge build">In build</span></span>
+          <p>Booking notes for members and admins, and ongoing hardening of the account and payments layer as real-world usage surfaces edge cases.</p>
+        </div>
+        <div class="status-row">
+          <span><span class="badge road">Planned</span></span>
+          <p>Payment reminder notifications, richer admin reporting across revenue and outstanding balances, and member web chat enhancements.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Quote below is placeholder copy. To confirm with Alec before publishing. -->
+  <div class="quote">
+    <blockquote>&ldquo;Placeholder pull quote from Alec about the committee no longer chasing payments or policing the booking rules by hand. To confirm before this page goes live.&rdquo;</blockquote>
+    <cite>Alec Goznik &middot; Gold Coast Waterski Club</cite>
+  </div>
+
+</article>
+
+<footer class="site">
+  <div class="wrap">
+    <a class="wordmark" href="#">INTELECOR</a>
+    <p class="fine">Booking and operations software for member-run clubs. Built around the club's own rules, hosted with Australian-friendly infrastructure, and designed for the way a ski day actually runs.</p>
+  </div>
+</footer>
+
+</body>
+</html>

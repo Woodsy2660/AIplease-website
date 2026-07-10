@@ -1,0 +1,1 @@
+export { BainHome as FrontierHome } from "@/components/home/bain-home";

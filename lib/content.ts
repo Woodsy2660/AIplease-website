@@ -58,6 +58,9 @@ export type Pillar = {
 };
 
 export const pillars: Pillar[] = [
+  // ---------------------------------------------------------------------------
+  // Legacy pillars (existing detailed pages)
+  // ---------------------------------------------------------------------------
   {
     number: "01",
     slug: "strategy-foresight",
@@ -153,6 +156,79 @@ export const pillars: Pillar[] = [
         title: "Review",
         body: "Quarterly reviews that tie the system back to the outcomes it was built to deliver.",
       },
+    ],
+  },
+  // ---------------------------------------------------------------------------
+  // New service pillars — TODO: replace placeholder content before launch
+  // ---------------------------------------------------------------------------
+  {
+    number: "04",
+    slug: "ai-audit",
+    name: "AI Audit & Strategy",
+    tagline: "Map your workflows, find the real return.",
+    headline: "Coming soon.",
+    summary: "This service page is under construction.",
+    offerings: ["Workflow mapping", "ROI analysis", "Strategic recommendations"],
+    process: [
+      { step: "01", title: "Audit", body: "We review your current operations." },
+      { step: "02", title: "Analyse", body: "Identify AI opportunities." },
+      { step: "03", title: "Recommend", body: "Prioritised action plan." },
+    ],
+  },
+  {
+    number: "05",
+    slug: "training",
+    name: "Team Training",
+    tagline: "Get more from tools you already pay for.",
+    headline: "Coming soon.",
+    summary: "This service page is under construction.",
+    offerings: ["Tool proficiency", "Best practices", "Hands-on workshops"],
+    process: [
+      { step: "01", title: "Assess", body: "Understand current skill levels." },
+      { step: "02", title: "Train", body: "Tailored workshops." },
+      { step: "03", title: "Support", body: "Ongoing guidance." },
+    ],
+  },
+  {
+    number: "06",
+    slug: "safe-ai",
+    name: "Safe AI Use",
+    tagline: "Data safety, governance, the rules.",
+    headline: "Coming soon.",
+    summary: "This service page is under construction.",
+    offerings: ["Data governance", "Policy development", "Compliance review"],
+    process: [
+      { step: "01", title: "Review", body: "Current data practices." },
+      { step: "02", title: "Design", body: "Governance framework." },
+      { step: "03", title: "Implement", body: "Policies and training." },
+    ],
+  },
+  {
+    number: "07",
+    slug: "custom-builds",
+    name: "Custom AI Builds",
+    tagline: "Systems that fit how you already work.",
+    headline: "Coming soon.",
+    summary: "This service page is under construction.",
+    offerings: ["Custom assistants", "Workflow automation", "Integrations"],
+    process: [
+      { step: "01", title: "Scope", body: "Define requirements." },
+      { step: "02", title: "Build", body: "Iterative development." },
+      { step: "03", title: "Deploy", body: "Production rollout." },
+    ],
+  },
+  {
+    number: "08",
+    slug: "ongoing",
+    name: "Ongoing Partnership",
+    tagline: "We stay as the technology moves.",
+    headline: "Coming soon.",
+    summary: "This service page is under construction.",
+    offerings: ["Monitoring", "Updates", "Quarterly reviews"],
+    process: [
+      { step: "01", title: "Monitor", body: "Continuous oversight." },
+      { step: "02", title: "Update", body: "Keep systems current." },
+      { step: "03", title: "Review", body: "Regular check-ins." },
     ],
   },
 ];
@@ -354,6 +430,175 @@ export type CaseStudy = {
 };
 
 export const caseStudies: CaseStudy[] = [
+  // ---------------------------------------------------------------------------
+  // Client case studies
+  // ---------------------------------------------------------------------------
+  {
+    slug: "roy-cardiology",
+    client: "Roy Cardiology",
+    industry: "Healthcare",
+    pillarSlug: "build-deploy",
+    metric: "0",
+    metricLabel: "extra admin steps added",
+    title: "Practice Insights: a rhythm layer for specialist care",
+    summary:
+      "A Sydney cardiology practice turned Gentu practice data into a weekly operational cadence. Insights arrive before the meeting, not after a manual export.",
+    challenge: [
+      "Operational questions outpaced answers assembled from Gentu exports and spreadsheets.",
+      "Weekly practice meetings ran on memory rather than a shared, current picture.",
+      "The brief was infrastructure that matches how the practice already works, not another dashboard.",
+    ],
+    approach: [
+      "Prototyped against de-identified Gentu exports to surface real report quirks early.",
+      "Designed three visual directions on synthetic data before selecting a calm, card-based system.",
+      "Built Practice Insights: observation, not judgement, noting what matters and offering options.",
+    ],
+    results: [
+      { value: "Weekly", label: "meeting-ready reports on demand" },
+      { value: "AWS", label: "Sydney hosting with AU data residency" },
+      { value: "FHIR", label: "R4-ready architecture for Gentu API" },
+    ],
+    quote: {
+      text: "Quote to confirm with A/Prof Andrew Roy before publishing.",
+      name: "A/Prof Andrew Roy",
+      role: "Roy Cardiology",
+    },
+  },
+  {
+    slug: "gcwsc",
+    client: "Gold Coast Waterski Club",
+    industry: "Sport & recreation",
+    pillarSlug: "build-deploy",
+    metric: "1",
+    metricLabel: "boat, full rulebook in software",
+    title: "Club booking platform built around the ski day",
+    summary:
+      "A member-run waterski club replaced its ageing booking system with a platform that enforces club rules, tracks sets and guest fees, and closes each ski day with the boat's numbers on record.",
+    challenge: [
+      "The previous app took payments but booking rules lived in people's heads.",
+      "Unpaid sets drifted for weeks; family bookings scattered across accounts.",
+      "Boat engine hours and fuel levels were recorded inconsistently between bookings.",
+    ],
+    approach: [
+      "Mapped booking rules, fee tiers and ski-day workflows from club documents and committee Q&A.",
+      "Encoded booking windows, guest tiers and payment lockouts as data constraints.",
+      "Modelled the full ski day lifecycle from slot pick through start/end reports and payment.",
+    ],
+    results: [
+      { value: "Live", label: "in production, club-wide" },
+      { value: "Square", label: "card-on-file payments" },
+      { value: "60+", label: "members on one shared boat" },
+    ],
+    quote: {
+      text: "Quote to confirm with Alec Goznik before publishing.",
+      name: "Alec Goznik",
+      role: "Gold Coast Waterski Club",
+    },
+  },
+  {
+    slug: "pacific-fertiliser",
+    client: "Pacific Fertiliser",
+    industry: "Agriculture & fertiliser supply",
+    pillarSlug: "build-deploy",
+    metric: "100%",
+    metricLabel: "on-premises data residency",
+    title: "Local chat agents on the internal database",
+    summary:
+      "An Australian fertiliser supplier deployed locally hosted chat agents on its internal database so staff spend less time chasing records and more time acting on them.",
+    challenge: [
+      "Senior staff acted as the lookup layer for product, order and customer questions.",
+      "Each answer required stopping work and knowing which system held the record.",
+      "Commercial data could not be sent to external AI services.",
+    ],
+    approach: [
+      "Mapped workflows across sales, dispatch and accounts before touching systems.",
+      "Documented the existing software estate and sources of truth.",
+      "Deployed read-focused, role-scoped agents on the company's own infrastructure.",
+    ],
+    results: [
+      { value: "Local", label: "on-premises agent deployment" },
+      { value: "Read", label: "access to internal database" },
+      { value: "Live", label: "tuning against real question patterns" },
+    ],
+    quote: {
+      text: "Quote to confirm with Pacific Fertiliser before publishing.",
+      name: "Name to confirm",
+      role: "Pacific Fertiliser",
+    },
+  },
+  {
+    slug: "agrimate",
+    client: "Agri-Mate",
+    industry: "Agriculture",
+    pillarSlug: "build-deploy",
+    metric: "Live",
+    metricLabel: "row-level harvest visibility",
+    title: "Agri-Mate: the harvest, visible in real time",
+    summary:
+      "A NSW Riverina citrus orchard turned its harvest into live, row-level data with Agri-Mate, tracking every picker, every bin and every block without slowing a crew down.",
+    challenge: [
+      "Paper tally cards and supervisor memory could not keep pace with the harvest.",
+      "Bin locations, picker counts and block yields were only known roughly, after the fact.",
+      "Enterprise farm software assumed office time and training nobody on the ground had.",
+    ],
+    approach: [
+      "Shadowed picking days end to end and mapped tally and payment workflows.",
+      "Built a field-first prototype tested mid-season with real crews.",
+      "Modelled blocks, rows, varieties, crews and bins so one bin scan feeds tally, map and yield.",
+    ],
+    results: [
+      { value: "Live", label: "picker and bin tracking in production" },
+      { value: "GPS", label: "row-level bin location" },
+      { value: "Field", label: "to-shed data on Supabase and n8n" },
+    ],
+    quote: {
+      text: "Quote to confirm with the pilot grower before publishing.",
+      name: "Grower",
+      role: "Citrus orchard, NSW Riverina",
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // New nav case studies — TODO: replace placeholder content before launch
+  // ---------------------------------------------------------------------------
+  {
+    slug: "hr-please",
+    client: "HR Please",
+    industry: "HR & Compliance",
+    pillarSlug: "build-deploy",
+    metric: "24/7",
+    metricLabel: "HR compliance coverage",
+    title: "HR Please — Australian HR compliance assistant",
+    summary: "On-demand HR compliance guidance for businesses without a dedicated HR function.",
+    challenge: ["Small businesses need HR guidance outside business hours."],
+    approach: ["Built an assistant trained on Australian HR law."],
+    results: [{ value: "24/7", label: "availability" }],
+    quote: {
+      text: "Quote coming soon.",
+      name: "Client",
+      role: "HR Please",
+    },
+  },
+  {
+    slug: "openclaw",
+    client: "OpenClaw",
+    industry: "Legal Tech",
+    pillarSlug: "build-deploy",
+    metric: "TBD",
+    metricLabel: "Coming soon",
+    title: "OpenClaw — Legal research assistant",
+    summary: "This case study is under construction.",
+    challenge: ["Details coming soon."],
+    approach: ["Details coming soon."],
+    results: [{ value: "TBD", label: "Coming soon" }],
+    quote: {
+      text: "Quote coming soon.",
+      name: "Client",
+      role: "OpenClaw",
+    },
+  },
+  // ---------------------------------------------------------------------------
+  // Existing sample case studies
+  // ---------------------------------------------------------------------------
   {
     slug: "freight-dispatch-copilot",
     client: "[SAMPLE] Meridian Freight",

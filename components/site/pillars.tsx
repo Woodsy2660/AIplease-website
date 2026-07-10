@@ -28,23 +28,23 @@ export function PillarsSection({
       <Container>
         <Reveal>
           <Eyebrow>{eyebrow}</Eyebrow>
-          <h2 className="mt-5 max-w-3xl text-4xl sm:text-5xl">{heading}</h2>
-          <p className="mt-5 max-w-xl text-lg text-ink-soft">{intro}</p>
+          <h2 className="mt-4 max-w-3xl text-3xl sm:text-4xl">{heading}</h2>
+          <p className="mt-4 max-w-xl text-base text-ink-soft">{intro}</p>
         </Reveal>
 
-        <div className="mt-12 border-b border-border sm:mt-16">
+        <div className="mt-10 border-b border-border sm:mt-12">
           {pillars.map((p, i) => (
             <Reveal key={p.slug} delay={i * 0.05}>
               <Link
                 href={`/services/${p.slug}`}
-                className="group block border-t border-border py-8 sm:py-10"
+                className="group block border-t border-border py-6 sm:py-8"
               >
-                <div className="grid gap-5 lg:grid-cols-[3rem_1fr_auto] lg:items-start lg:gap-8">
+                <div className="grid gap-4 lg:grid-cols-[2.5rem_1fr_auto] lg:items-start lg:gap-6">
                   <span className="font-mono text-sm font-medium text-accent">
                     {p.number}
                   </span>
                   <div>
-                    <h3 className="text-2xl tracking-tight sm:text-3xl">
+                    <h3 className="text-xl tracking-tight sm:text-2xl">
                       {p.name}
                     </h3>
                     <p className="mt-2 max-w-xl text-ink-soft">{p.tagline}</p>

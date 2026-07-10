@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  body { margin: 0; background: #E5E2DD; }
+  a { color: #291F16; }
+  a:hover { color: #FE4939; }
+
+  @keyframes sf-drift-a {
+    0%   { transform: translate(-50%, -50%); }
+    100% { transform: translate(calc(-50% + 22px), calc(-50% - 14px)); }
+  }
+  @keyframes sf-drift-b {
+    0%   { transform: translate(-50%, -50%); }
+    100% { transform: translate(calc(-50% - 18px), calc(-50% + 16px)); }
+  }
+  @keyframes sf-drift-c {
+    0%   { transform: translate(-50%, -50%); }
+    100% { transform: translate(calc(-50% + 14px), calc(-50% + 20px)); }
+  }
+  @keyframes sf-drift-d {
+    0%   { transform: translate(-50%, -50%); }
+    100% { transform: translate(calc(-50% - 24px), calc(-50% - 10px)); }
+  }
+
+  @keyframes sf-cross {
+    0%   { filter: blur(3px);   opacity: 0.55; color: #BEB8AA; transform: scale(0.97); }
+    3%   { filter: blur(0px);   opacity: 1;    color: #291F16; transform: scale(1.03); }
+    8%   { filter: blur(0px);   opacity: 1;    color: #291F16; transform: scale(1.03); }
+    13%  { filter: blur(0.6px); opacity: 0.55; color: #BEB8AA; transform: scale(0.98); }
+    88%  { filter: blur(0.6px); opacity: 0.55; color: #BEB8AA; transform: scale(0.98); }
+    100% { filter: blur(3px);   opacity: 0.55; color: #BEB8AA; transform: scale(0.97); }
+  }
+
+  @keyframes sf-strike {
+    0%   { transform: scaleX(0); opacity: 1; }
+    4.5% { transform: scaleX(0); opacity: 1; }
+    9%   { transform: scaleX(1); opacity: 1; }
+    90%  { transform: scaleX(1); opacity: 1; }
+    96%  { transform: scaleX(1); opacity: 0; }
+    97%  { transform: scaleX(0); opacity: 0; }
+    100% { transform: scaleX(0); opacity: 0; }
+  }
+
+  @keyframes sf-payoff-in {
+    from { opacity: 0; filter: blur(6px); }
+    to   { opacity: 1; filter: blur(0px); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-sf-anim] { animation: none !important; }
+    [data-sf-strike="shown"] { animation: none !important; transform: scaleX(1) !important; opacity: 1 !important; }
+    [data-sf-strike="hidden"] { animation: none !important; transform: scaleX(0) !important; }
+    [data-sf-payoff] { animation: none !important; opacity: 1 !important; filter: none !important; }
+  }
+</style>
+</helmet>
+<section data-screen-label="Sound familiar section" style="position: relative; width: 100%; min-height: 680px; height: 92vh; max-height: 880px; background: #E5E2DD; overflow: hidden; font-family: 'Inter', 'Helvetica Neue', sans-serif;">
+
+  <h2 style="position: absolute; top: 9%; left: 50%; transform: translateX(-50%); margin: 0; color: #291F16; font-size: clamp(30px, 4vw, 48px); font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; z-index: 3;">Sound familiar?</h2>
+
+  <sc-for list="{{ quotes }}" as="q" hint-placeholder-count="6">
+    <div data-sf-anim="1" style="position: absolute; left: {{ q.left }}; top: {{ q.top }}; transform: translate(-50%, -50%); width: max-content; max-width: {{ q.maxWidth }}; will-change: transform; animation: {{ q.driftAnim }}; z-index: 1;">
+      <p data-sf-anim="1" style="margin: 0; font-size: {{ q.size }}px; font-weight: {{ q.weight }}; line-height: 1.45; letter-spacing: 0.005em; text-align: center; text-wrap: balance; color: {{ q.baseColor }}; opacity: {{ q.baseOpacity }}; filter: blur({{ q.baseBlur }}); will-change: filter, opacity, transform; animation: {{ q.focusAnim }};">&ldquo;{{ q.text }}&rdquo;</p>
+      <span data-sf-strike="{{ q.staticStrike }}" style="position: absolute; left: -1.5%; right: -1.5%; top: 50%; height: 2px; margin-top: -1px; background: #FE4939; border-radius: 1px; transform: scaleX(0); transform-origin: left center; will-change: transform, opacity; animation: {{ q.strikeAnim }}; pointer-events: none;"></span>
+    </div>
+  </sc-for>
+
+  <sc-if value="{{ showPayoff }}" hint-placeholder-val="{{ true }}">
+    <p data-sf-payoff="1" style="position: absolute; left: 50%; bottom: 5.5%; transform: translateX(-50%); margin: 0; color: #291F16; font-size: clamp(15px, 1.2vw, 18px); font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; white-space: nowrap; opacity: 0; animation: {{ payoffAnim }}; z-index: 3;">One by one, we cross them off.</p>
+  </sc-if>
+
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;$preview&quot;: { &quot;width&quot;: 1440, &quot;height&quot;: 760 },
+  &quot;speed&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.5, &quot;max&quot;: 2, &quot;step&quot;: 0.25, &quot;unit&quot;: &quot;\u00d7&quot;, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Motion&quot; },
+  &quot;showPayoff&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Content&quot; }
+}">
+class Component extends DCLogic {
+  state = { tier: Component.tierFor(typeof window !== 'undefined' ? window.innerWidth : 1440) };
+
+  static tierFor(w) { return w < 640 ? 'mobile' : (w < 1200 ? 'narrow' : 'wide'); }
+
+  componentDidMount() {
+    this._onResize = () => {
+      const t = Component.tierFor(window.innerWidth);
+      if (t !== this.state.tier) this.setState({ tier: t });
+    };
+    window.addEventListener('resize', this._onResize);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  renderVals() {
+    const speed = this.props.speed ?? 1;
+    const showPayoff = this.props.showPayoff ?? true;
+    const tier = this.state.tier;
+    const mob = tier === 'mobile';
+    const narrow = tier === 'narrow';
+
+    // text, desktop left/top, size, weight, drift variant, driftDur, driftDelay,
+    // staticSharp (reduced-motion fallback), mobile position (null = hidden on mobile)
+    const data = [
+      { t: "We're paying for AI tools nobody actually uses.",                        l: '17%', tp: '30%', s: 21, w: 500, v: 'a', dd: 30, dl: -4,  sharp: true,  n: { l: '28%', tp: '27%' }, m: { l: '50%', tp: '22%' } },
+      { t: 'Everyone says we need AI. Nobody says what to do with it.',              l: '52%', tp: '27%', s: 18, w: 400, v: 'b', dd: 36, dl: -12, sharp: false, n: { l: '72%', tp: '34%' }, m: { l: '48%', tp: '34%' } },
+      { t: 'Our systems are too fragile and old.',                                   l: '83%', tp: '33%', s: 17, w: 400, v: 'c', dd: 26, dl: -9,  sharp: false, n: null,                    m: null },
+      { t: 'What about training our team?',                                          l: '10%', tp: '55%', s: 16, w: 400, v: 'd', dd: 34, dl: -20, sharp: false, n: null,                    m: null },
+      { t: "I know we're losing hours somewhere \u2014 I just can't see where.",     l: '34%', tp: '46%', s: 22, w: 500, v: 'b', dd: 38, dl: -2,  sharp: true,  n: { l: '30%', tp: '47%' }, m: { l: '52%', tp: '46%' } },
+      { t: 'Is my client data safe if we use this?',                                 l: '64%', tp: '45%', s: 17, w: 400, v: 'a', dd: 28, dl: -15, sharp: false, n: { l: '71%', tp: '57%' }, m: { l: '47%', tp: '58%' } },
+      { t: 'The last agency built it and vanished.',                                 l: '88%', tp: '59%', s: 16, w: 400, v: 'd', dd: 32, dl: -7,  sharp: false, n: null,                    m: null },
+      { t: "I don't want to spend money on something that's obsolete next year.",    l: '20%', tp: '71%', s: 18, w: 400, v: 'c', dd: 40, dl: -18, sharp: false, n: { l: '28%', tp: '68%' }, m: { l: '50%', tp: '70%' } },
+      { t: 'We built something last year and it already feels old.',                 l: '48%', tp: '66%', s: 17, w: 400, v: 'a', dd: 27, dl: -11, sharp: false, n: null,                    m: null },
+      { t: "I don't want to change how we work to suit some software.",              l: '75%', tp: '75%', s: 18, w: 400, v: 'b', dd: 35, dl: -24, sharp: false, n: { l: '72%', tp: '74%' }, m: null },
+      { t: 'Just tell me straight \u2014 do we even need this?',                     l: '31%', tp: '85%', s: 21, w: 500, v: 'd', dd: 31, dl: -6,  sharp: true,  n: { l: '38%', tp: '87%' }, m: { l: '50%', tp: '82%' } },
+    ];
+
+    const visible = mob ? data.filter(d => d.m) : (narrow ? data.filter(d => d.n) : data);
+    const focusDur = 44 * speed * (mob ? 1.35 : 1);
+    const step = focusDur / visible.length;
+
+    const quotes = visible.map((d, i) => {
+      // Keep quote boxes fully inside the band: center must stay at least
+      // half the box width + drift amplitude + padding from either edge.
+      const boxW = narrow ? 260 : (d.s >= 20 ? 340 : 300);
+      const pad = boxW / 2 + 36;
+      const pos = mob ? d.m : (narrow ? d.n : d);
+      const px = narrow ? pos.l : (mob ? pos.l : d.l);
+      return {
+      text: d.t,
+      left: mob ? d.m.l : 'clamp(' + pad + 'px, ' + px + ', calc(100% - ' + pad + 'px))',
+      top: mob ? d.m.tp : pos.tp,
+      size: mob ? Math.max(15, d.s - 3) : (narrow ? Math.max(15, d.s - 2) : d.s),
+      weight: d.w,
+      maxWidth: mob ? '82vw' : boxW + 'px',
+      baseColor: d.sharp ? '#291F16' : '#BEB8AA',
+      baseOpacity: d.sharp ? 1 : 0.55,
+      baseBlur: d.sharp ? '0px' : '3px',
+      staticStrike: d.sharp ? 'hidden' : 'shown',
+      driftAnim: 'sf-drift-' + d.v + ' ' + (d.dd * speed * (mob ? 1.4 : 1)).toFixed(1) + 's ease-in-out ' + d.dl + 's infinite alternate',
+      focusAnim: 'sf-cross ' + focusDur.toFixed(1) + 's ease-in-out ' + (-(i * step)).toFixed(1) + 's infinite both',
+      strikeAnim: 'sf-strike ' + focusDur.toFixed(1) + 's ease-in-out ' + (-(i * step)).toFixed(1) + 's infinite both',
+      };
+    });
+
+    return {
+      quotes,
+      showPayoff,
+      payoffAnim: 'sf-payoff-in ' + (3 * speed) + 's ease ' + (9 * speed) + 's forwards',
+    };
+  }
+}
+</script>
+</body>
+</html>

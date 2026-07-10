@@ -39,17 +39,17 @@ export default function ProjectsPage() {
     <>
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-border grain-rules">
-        <Container className="py-16 sm:py-24 lg:py-28">
+        <Container className="py-12 sm:py-16 lg:py-20">
           <Reveal>
             <Eyebrow>Our projects</Eyebrow>
           </Reveal>
           <Reveal delay={0.06}>
-            <h1 className="mt-6 max-w-4xl text-[2.7rem] font-semibold leading-[1.02] tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mt-5 max-w-4xl text-[2.25rem] font-semibold leading-[1.02] tracking-tight sm:text-4xl lg:text-[2.75rem] xl:text-5xl">
               Productising what we keep building.
             </h1>
           </Reveal>
           <Reveal delay={0.12}>
-            <p className="mt-6 max-w-2xl text-xl text-ink-soft sm:text-2xl">
+            <p className="mt-5 max-w-2xl text-lg text-ink-soft sm:text-xl">
               When we solve the same problem enough times, we turn it into a
               product. HRplease is the first to ship — more are in development.
             </p>
@@ -64,8 +64,8 @@ export default function ProjectsPage() {
             <Eyebrow>Live now</Eyebrow>
           </Reveal>
           <Reveal delay={0.06}>
-            <div className="mt-8 rounded-3xl border border-border bg-sand p-8 sm:p-12 lg:p-14">
-              <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
+            <div className="mt-8 rounded-2xl border border-border bg-sand p-6 sm:p-8 lg:p-10">
+              <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-10">
                 <div>
                   <div className="flex flex-wrap items-center gap-3">
                     <StatusBadge status="Live" />
@@ -96,7 +96,7 @@ export default function ProjectsPage() {
                 </div>
                 <ul className="grid gap-px overflow-hidden rounded-2xl border border-border sm:grid-cols-2">
                   {hrplease.capabilities.map((c) => (
-                    <li key={c.title} className="bg-canvas p-5">
+                    <li key={c.title} className="bg-canvas p-4">
                       <div className="flex items-center gap-2">
                         <Check className="size-3.5 text-accent" aria-hidden />
                         <h3 className="text-sm font-semibold tracking-tight">
